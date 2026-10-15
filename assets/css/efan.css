@@ -619,7 +619,7 @@ body.nav-open { overflow: hidden; }
   margin: 0 0 .75rem;
   padding: .2rem .6rem;
   background: var(--green);
-  color: var(--white) !important;
+  color: var(--white);
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .07em;
@@ -1276,3 +1276,19 @@ table.data p + p { margin-top: .5rem; }
 
 /* First / last page of a section: the empty half stays white, not a grey gap */
 .pager__inner > span { background: var(--white); }
+
+/* =========================================================================
+   19. Bilingual build — corrections
+   ========================================================================= */
+
+/* Tag colours must beat the `.callout p` / `.card p` body colour, which is
+   more specific than a bare class. */
+.callout p.callout__tag { color: var(--white); }
+.card p.card__tag { color: var(--blue); }
+.card p.card__tag--red { color: var(--white); }
+.card p.card__kicker { color: var(--red); }
+
+/* French titles are longer: give the home page headline room to breathe. */
+.hero__body h1 { text-wrap: balance; }
+html[lang="fr"] .hero__body h1 { font-size: clamp(1.75rem, 1.15rem + 2.5vw, 2.625rem); }
+html[lang="fr"] .page-head h1 { text-wrap: balance; }

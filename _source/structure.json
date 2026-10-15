@@ -1,0 +1,762 @@
+{
+ "pages": [
+  "10-elementary-school-schedule-ns2",
+  "11-elementary-school-assessment-and-report-cards-ns2",
+  "12-elementary-school-operating-mode-ns2",
+  "13-middle-school-schedule-ns2",
+  "14-middle-school-assessment-and-report-cards-ns2",
+  "15-middle-school-dnb-middle-school-diploma-ns2",
+  "16-high-school-operating-mode-ns2",
+  "17-middle-school-schedule-ns2",
+  "18-high-school-assessment-and-report-cards-ns2",
+  "19-high-school-baccalaureat-ns2",
+  "20-parcoursup",
+  "21-high-school-translation-of-reports-ns2",
+  "22-high-school-the-american-bac-and-the-credit-system-ns2",
+  "24-1-norfolk",
+  "24-2-virginia-beach",
+  "24-school-district-and-transportation",
+  "36-enrollment-in-the-american-schools",
+  "37-vaccination",
+  "38-useful-contacts",
+  "6-bis-the-principal-of-efan-ns1-a",
+  "9-elementary-school-operating-mode-ns2",
+  "a-propos-2-projet-detablissement",
+  "art-competition",
+  "board-of-directors-ns1-a",
+  "educational-team-ns1-a",
+  "enrollment-french-american-school-of-norfolk",
+  "history-ns",
+  "parentsrepresentatives-ns1-a",
+  "reussites-de-nos-eleves",
+  "school-board-ns1-a",
+  "school-life-ns3",
+  "school-newsletter",
+  "school-project-ns1",
+  "testimonies",
+  "tuition-and-payment-terms",
+  "volunteering-ns1-a"
+ ],
+ "nav": [
+  {
+   "id": "fasn",
+   "label": {
+    "en": "FASN",
+    "fr": "L’EFAN"
+   },
+   "title": {
+    "en": "About the school",
+    "fr": "L’établissement"
+   },
+   "intro": {
+    "en": "Who we are, where we come from, and the people who run the school day to day.",
+    "fr": "Qui nous sommes, d’où nous venons, et les personnes qui font vivre l’école au quotidien."
+   },
+   "feature": null,
+   "footer_link": null,
+   "groups": [
+    {
+     "label": null,
+     "items": [
+      {
+       "label": {
+        "en": "What is FASN?",
+        "fr": "Qu’est-ce que l’EFAN ?"
+       },
+       "slug": "a-propos-2-projet-detablissement"
+      },
+      {
+       "label": {
+        "en": "History",
+        "fr": "Historique"
+       },
+       "slug": "history-ns"
+      }
+     ]
+    },
+    {
+     "label": {
+      "en": "FASN organization",
+      "fr": "L’organisation"
+     },
+     "items": [
+      {
+       "label": {
+        "en": "Board of Directors / Trustees",
+        "fr": "Conseil d’administration"
+       },
+       "slug": "board-of-directors-ns1-a"
+      },
+      {
+       "label": {
+        "en": "Leadership & Administration",
+        "fr": "Direction et administration"
+       },
+       "slug": "6-bis-the-principal-of-efan-ns1-a"
+      },
+      {
+       "label": {
+        "en": "Parents’ Representatives",
+        "fr": "Représentants des parents"
+       },
+       "slug": "parentsrepresentatives-ns1-a"
+      },
+      {
+       "label": {
+        "en": "Volunteering",
+        "fr": "Bénévolat"
+       },
+       "slug": "volunteering-ns1-a"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "academics",
+   "label": {
+    "en": "Academics",
+    "fr": "Enseignement"
+   },
+   "title": {
+    "en": "Academics",
+    "fr": "L’enseignement"
+   },
+   "intro": {
+    "en": "The French national curriculum from Kindergarten to 12th grade, level by level.",
+    "fr": "Le programme de l’Éducation nationale, de la grande section à la terminale, niveau par niveau."
+   },
+   "feature": {
+    "label": {
+     "en": "Educational Team",
+     "fr": "Équipe pédagogique"
+    },
+    "slug": "educational-team-ns1-a"
+   },
+   "footer_link": {
+    "label": {
+     "en": "Réussites de nos élèves",
+     "fr": "Réussites de nos élèves"
+    },
+    "slug": "reussites-de-nos-eleves"
+   },
+   "groups": [
+    {
+     "label": {
+      "en": "Elementary School",
+      "fr": "École élémentaire"
+     },
+     "items": [
+      {
+       "label": {
+        "en": "Operating mode",
+        "fr": "Fonctionnement"
+       },
+       "slug": "9-elementary-school-operating-mode-ns2"
+      },
+      {
+       "label": {
+        "en": "Schedule",
+        "fr": "Emploi du temps"
+       },
+       "slug": "10-elementary-school-schedule-ns2"
+      },
+      {
+       "label": {
+        "en": "Assessment and Report Cards",
+        "fr": "Évaluations et bulletins"
+       },
+       "slug": "11-elementary-school-assessment-and-report-cards-ns2"
+      }
+     ]
+    },
+    {
+     "label": {
+      "en": "Middle School",
+      "fr": "Collège"
+     },
+     "items": [
+      {
+       "label": {
+        "en": "Operating mode",
+        "fr": "Fonctionnement"
+       },
+       "slug": "12-elementary-school-operating-mode-ns2"
+      },
+      {
+       "label": {
+        "en": "Schedule",
+        "fr": "Emploi du temps"
+       },
+       "slug": "13-middle-school-schedule-ns2"
+      },
+      {
+       "label": {
+        "en": "Assessment and Report Cards",
+        "fr": "Évaluations et bulletins"
+       },
+       "slug": "14-middle-school-assessment-and-report-cards-ns2"
+      },
+      {
+       "label": {
+        "en": "DNB Middle School Diploma",
+        "fr": "Diplôme national du brevet"
+       },
+       "slug": "15-middle-school-dnb-middle-school-diploma-ns2"
+      }
+     ]
+    },
+    {
+     "label": {
+      "en": "High School",
+      "fr": "Lycée"
+     },
+     "items": [
+      {
+       "label": {
+        "en": "Operating mode",
+        "fr": "Fonctionnement"
+       },
+       "slug": "16-high-school-operating-mode-ns2"
+      },
+      {
+       "label": {
+        "en": "Schedule",
+        "fr": "Emploi du temps"
+       },
+       "slug": "17-middle-school-schedule-ns2"
+      },
+      {
+       "label": {
+        "en": "Assessment and Report Cards",
+        "fr": "Évaluations et bulletins"
+       },
+       "slug": "18-high-school-assessment-and-report-cards-ns2"
+      },
+      {
+       "label": {
+        "en": "French Baccalauréat",
+        "fr": "Baccalauréat français"
+       },
+       "slug": "19-high-school-baccalaureat-ns2"
+      },
+      {
+       "label": {
+        "en": "Parcoursup",
+        "fr": "Parcoursup"
+       },
+       "slug": "20-parcoursup"
+      },
+      {
+       "label": {
+        "en": "The American “bac” and the Credit System",
+        "fr": "Le « bac » américain et les crédits"
+       },
+       "slug": "22-high-school-the-american-bac-and-the-credit-system-ns2"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "school-life",
+   "label": {
+    "en": "School life",
+    "fr": "Vie scolaire"
+   },
+   "title": {
+    "en": "School life",
+    "fr": "La vie scolaire"
+   },
+   "intro": {
+    "en": "Where our classes are hosted, how students get there, and what happens through the year.",
+    "fr": "Où se déroulent nos cours, comment les élèves s’y rendent, et ce qui rythme l’année."
+   },
+   "feature": null,
+   "footer_link": null,
+   "groups": [
+    {
+     "label": {
+      "en": "School Locations",
+      "fr": "Nos implantations"
+     },
+     "items": [
+      {
+       "label": {
+        "en": "American schools",
+        "fr": "Les établissements américains"
+       },
+       "slug": "school-life-ns3"
+      },
+      {
+       "label": {
+        "en": "School district and transportation",
+        "fr": "Carte scolaire et transport"
+       },
+       "slug": "24-school-district-and-transportation"
+      }
+     ]
+    },
+    {
+     "label": {
+      "en": "Through the year",
+      "fr": "Au fil de l’année"
+     },
+     "items": [
+      {
+       "label": {
+        "en": "Norfolk academic calendar",
+        "fr": "Calendrier scolaire de Norfolk"
+       },
+       "slug": "24-1-norfolk"
+      },
+      {
+       "label": {
+        "en": "Virginia Beach academic calendar",
+        "fr": "Calendrier scolaire de Virginia Beach"
+       },
+       "slug": "24-2-virginia-beach"
+      },
+      {
+       "label": {
+        "en": "School Newsletter",
+        "fr": "La lettre de l’école"
+       },
+       "slug": "school-newsletter"
+      },
+      {
+       "label": {
+        "en": "School life in pictures",
+        "fr": "La vie de l’école en images"
+       },
+       "slug": "/?page_id=3221"
+      },
+      {
+       "label": {
+        "en": "Art Competition",
+        "fr": "Concours artistique"
+       },
+       "slug": "art-competition"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "admissions",
+   "label": {
+    "en": "Admissions",
+    "fr": "Admissions"
+   },
+   "title": {
+    "en": "Admissions",
+    "fr": "Les admissions"
+   },
+   "intro": {
+    "en": "Spots are allocated in the order that complete applications are received.",
+    "fr": "Les places sont attribuées dans l’ordre d’arrivée des dossiers complets."
+   },
+   "feature": {
+    "label": {
+     "en": "Start the 2026‑2027 enrollment",
+     "fr": "Commencer l’inscription 2026-2027"
+    },
+    "slug": "enrollment-french-american-school-of-norfolk"
+   },
+   "footer_link": null,
+   "groups": [
+    {
+     "label": null,
+     "items": [
+      {
+       "label": {
+        "en": "Tuition and Payment Terms",
+        "fr": "Frais de scolarité et paiement"
+       },
+       "slug": "tuition-and-payment-terms"
+      },
+      {
+       "label": {
+        "en": "Enrollment in FASN",
+        "fr": "Inscription à l’EFAN"
+       },
+       "slug": "enrollment-french-american-school-of-norfolk"
+      }
+     ]
+    },
+    {
+     "label": null,
+     "items": [
+      {
+       "label": {
+        "en": "Enrollment in the American Schools",
+        "fr": "Inscription dans les établissements américains"
+       },
+       "slug": "36-enrollment-in-the-american-schools"
+      },
+      {
+       "label": {
+        "en": "Translation of reports",
+        "fr": "Traduction des bulletins"
+       },
+       "slug": "21-high-school-translation-of-reports-ns2"
+      },
+      {
+       "label": {
+        "en": "Vaccination",
+        "fr": "Vaccinations"
+       },
+       "slug": "37-vaccination"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "flat": [
+  {
+   "label": {
+    "en": "Testimonies",
+    "fr": "Témoignages"
+   },
+   "slug": "testimonies"
+  },
+  {
+   "label": {
+    "en": "Useful contacts",
+    "fr": "Contacts utiles"
+   },
+   "slug": "38-useful-contacts"
+  }
+ ],
+ "extra": [
+  {
+   "label": {
+    "en": "School Board",
+    "fr": "Conseil d’école"
+   },
+   "slug": "school-board-ns1-a"
+  },
+  {
+   "label": {
+    "en": "School Project",
+    "fr": "Projet d’établissement"
+   },
+   "slug": "school-project-ns1"
+  }
+ ],
+ "titles": {
+  "10-elementary-school-schedule-ns2": {
+   "en": "Schedule",
+   "fr": "Emploi du temps"
+  },
+  "11-elementary-school-assessment-and-report-cards-ns2": {
+   "en": "Assessment and Report Cards",
+   "fr": "Évaluations et bulletins"
+  },
+  "12-elementary-school-operating-mode-ns2": {
+   "en": "Operating mode",
+   "fr": "Fonctionnement"
+  },
+  "13-middle-school-schedule-ns2": {
+   "en": "Schedule",
+   "fr": "Emploi du temps"
+  },
+  "14-middle-school-assessment-and-report-cards-ns2": {
+   "en": "Assessment and Report Cards",
+   "fr": "Évaluations et bulletins"
+  },
+  "15-middle-school-dnb-middle-school-diploma-ns2": {
+   "en": "DNB Middle School Diploma",
+   "fr": "Diplôme national du brevet"
+  },
+  "16-high-school-operating-mode-ns2": {
+   "en": "Operating mode",
+   "fr": "Fonctionnement"
+  },
+  "17-middle-school-schedule-ns2": {
+   "en": "Schedule",
+   "fr": "Emploi du temps"
+  },
+  "18-high-school-assessment-and-report-cards-ns2": {
+   "en": "Assessment and Report Cards",
+   "fr": "Évaluations et bulletins"
+  },
+  "19-high-school-baccalaureat-ns2": {
+   "en": "French Baccalauréat",
+   "fr": "Baccalauréat français"
+  },
+  "20-parcoursup": {
+   "en": "Parcoursup",
+   "fr": "Parcoursup"
+  },
+  "21-high-school-translation-of-reports-ns2": {
+   "en": "Translation of reports",
+   "fr": "Traduction des bulletins"
+  },
+  "22-high-school-the-american-bac-and-the-credit-system-ns2": {
+   "en": "The American High School Diploma and the credit system",
+   "fr": "Le high school diploma américain et le système de crédits"
+  },
+  "24-1-norfolk": {
+   "en": "Norfolk academic calendar",
+   "fr": "Calendrier scolaire de Norfolk"
+  },
+  "24-2-virginia-beach": {
+   "en": "Virginia Beach academic calendar",
+   "fr": "Calendrier scolaire de Virginia Beach"
+  },
+  "24-school-district-and-transportation": {
+   "en": "School district and transportation",
+   "fr": "Carte scolaire et transport"
+  },
+  "36-enrollment-in-the-american-schools": {
+   "en": "Enrollment in the American schools",
+   "fr": "Inscription dans les établissements américains"
+  },
+  "37-vaccination": {
+   "en": "Vaccination",
+   "fr": "Vaccinations"
+  },
+  "38-useful-contacts": {
+   "en": "Useful contacts",
+   "fr": "Contacts utiles"
+  },
+  "6-bis-the-principal-of-efan-ns1-a": {
+   "en": "Leadership &amp; Administration",
+   "fr": "Direction et administration"
+  },
+  "9-elementary-school-operating-mode-ns2": {
+   "en": "Operating mode",
+   "fr": "Fonctionnement"
+  },
+  "a-propos-2-projet-detablissement": {
+   "en": "What is FASN?",
+   "fr": "Qu’est-ce que l’EFAN ?"
+  },
+  "art-competition": {
+   "en": "Art Competition",
+   "fr": "Concours artistique"
+  },
+  "board-of-directors-ns1-a": {
+   "en": "Board of Directors",
+   "fr": "Conseil d’administration"
+  },
+  "educational-team-ns1-a": {
+   "en": "Educational Team",
+   "fr": "Équipe pédagogique"
+  },
+  "enrollment-french-american-school-of-norfolk": {
+   "en": "Enrollment at FASN",
+   "fr": "Inscription à l’EFAN"
+  },
+  "history-ns": {
+   "en": "History",
+   "fr": "Historique"
+  },
+  "parentsrepresentatives-ns1-a": {
+   "en": "Parents’ representatives",
+   "fr": "Représentants des parents"
+  },
+  "reussites-de-nos-eleves": {
+   "en": "Réussites de nos élèves",
+   "fr": "Réussites de nos élèves"
+  },
+  "school-board-ns1-a": {
+   "en": "School Board",
+   "fr": "Conseil d’école"
+  },
+  "school-life-ns3": {
+   "en": "American schools",
+   "fr": "Les établissements américains"
+  },
+  "school-newsletter": {
+   "en": "School Newsletter",
+   "fr": "La lettre de l’école"
+  },
+  "school-project-ns1": {
+   "en": "School Project",
+   "fr": "Projet d’établissement"
+  },
+  "testimonies": {
+   "en": "Testimonies",
+   "fr": "Témoignages"
+  },
+  "tuition-and-payment-terms": {
+   "en": "Tuition and payment terms",
+   "fr": "Frais de scolarité et paiement"
+  },
+  "volunteering-ns1-a": {
+   "en": "Volunteering",
+   "fr": "Bénévolat"
+  }
+ },
+ "blurbs": {
+  "10-elementary-school-schedule-ns2": {
+   "en": "Elementary school timetable.",
+   "fr": "L’emploi du temps à l’école élémentaire."
+  },
+  "11-elementary-school-assessment-and-report-cards-ns2": {
+   "en": "How elementary pupils are assessed in both curricula.",
+   "fr": "Comment les élèves de l’élémentaire sont évalués dans les deux cursus."
+  },
+  "12-elementary-school-operating-mode-ns2": {
+   "en": "How the middle school programme works, day by day.",
+   "fr": "Le fonctionnement du collège, au jour le jour."
+  },
+  "13-middle-school-schedule-ns2": {
+   "en": "Middle school timetables at Great Neck and Crossroads.",
+   "fr": "Les emplois du temps au collège, à Great Neck et à Crossroads."
+  },
+  "14-middle-school-assessment-and-report-cards-ns2": {
+   "en": "How middle school students are assessed in both curricula.",
+   "fr": "Comment les collégiens sont évalués dans les deux cursus."
+  },
+  "15-middle-school-dnb-middle-school-diploma-ns2": {
+   "en": "Preparing and sitting the DNB as an individual candidate.",
+   "fr": "Préparer et passer le DNB en candidat libre."
+  },
+  "16-high-school-operating-mode-ns2": {
+   "en": "How the high school programme works, day by day.",
+   "fr": "Le fonctionnement du lycée, au jour le jour."
+  },
+  "17-middle-school-schedule-ns2": {
+   "en": "High school timetable at Frank W. Cox.",
+   "fr": "L’emploi du temps au lycée, à Frank W. Cox."
+  },
+  "18-high-school-assessment-and-report-cards-ns2": {
+   "en": "How high school students are assessed in both curricula.",
+   "fr": "Comment les lycéens sont évalués dans les deux cursus."
+  },
+  "19-high-school-baccalaureat-ns2": {
+   "en": "Preparing and sitting the French Baccalauréat from Norfolk.",
+   "fr": "Préparer et passer le baccalauréat français depuis Norfolk."
+  },
+  "20-parcoursup": {
+   "en": "How Parcoursup works for a student enrolled at FASN.",
+   "fr": "Comment fonctionne Parcoursup pour un élève scolarisé à l’EFAN."
+  },
+  "21-high-school-translation-of-reports-ns2": {
+   "en": "Getting American report cards translated.",
+   "fr": "Faire traduire les bulletins scolaires."
+  },
+  "22-high-school-the-american-bac-and-the-credit-system-ns2": {
+   "en": "The American High School Diploma and the credit system.",
+   "fr": "Le high school diploma américain et le système de crédits."
+  },
+  "24-1-norfolk": {
+   "en": "Norfolk Public Schools academic calendar.",
+   "fr": "Le calendrier scolaire des Norfolk Public Schools."
+  },
+  "24-2-virginia-beach": {
+   "en": "Virginia Beach City Public Schools academic calendar.",
+   "fr": "Le calendrier scolaire des Virginia Beach City Public Schools."
+  },
+  "24-school-district-and-transportation": {
+   "en": "School district rules and bus eligibility.",
+   "fr": "Les règles de carte scolaire et l’accès au bus scolaire."
+  },
+  "36-enrollment-in-the-american-schools": {
+   "en": "Registering with Norfolk or Virginia Beach public schools.",
+   "fr": "S’inscrire auprès des écoles publiques de Norfolk ou de Virginia Beach."
+  },
+  "37-vaccination": {
+   "en": "Vaccination requirements before leaving and after arriving.",
+   "fr": "Les vaccinations exigées avant le départ et après l’arrivée."
+  },
+  "38-useful-contacts": {
+   "en": "Who to contact, at FASN and in the school districts.",
+   "fr": "Qui contacter, à l’EFAN et dans les établissements américains."
+  },
+  "6-bis-the-principal-of-efan-ns1-a": {
+   "en": "The FASN Director and the Accountant.",
+   "fr": "La direction et la comptabilité de l’EFAN."
+  },
+  "9-elementary-school-operating-mode-ns2": {
+   "en": "How the elementary programme works, day by day.",
+   "fr": "Le fonctionnement de l’école élémentaire, au jour le jour."
+  },
+  "a-propos-2-projet-detablissement": {
+   "en": "What FASN is, why families join, and who the school is for.",
+   "fr": "Ce qu’est l’EFAN, pourquoi les familles la rejoignent et à qui elle s’adresse."
+  },
+  "art-competition": {
+   "en": "The art competition organised by FASN students.",
+   "fr": "Le concours artistique organisé par les élèves de l’EFAN."
+  },
+  "board-of-directors-ns1-a": {
+   "en": "The Board of Directors and the role of the Mission Laïque Française.",
+   "fr": "Le conseil d’administration et le rôle de la Mission laïque française."
+  },
+  "educational-team-ns1-a": {
+   "en": "The teachers who accompany FASN students, and their qualifications.",
+   "fr": "Les professeurs qui accompagnent les élèves de l’EFAN et leurs qualifications."
+  },
+  "enrollment-french-american-school-of-norfolk": {
+   "en": "The three steps of registration: FASN, CNED and the American school.",
+   "fr": "Les trois étapes de l’inscription : l’EFAN, le CNED et l’établissement américain."
+  },
+  "history-ns": {
+   "en": "How the school grew from a handful of pupils to a full K-12 programme.",
+   "fr": "Comment l’école est passée d’une poignée d’élèves à un cursus complet, de la maternelle à la terminale."
+  },
+  "parentsrepresentatives-ns1-a": {
+   "en": "The role of parents’ representatives and how to become one.",
+   "fr": "Le rôle des représentants des parents et comment le devenir."
+  },
+  "reussites-de-nos-eleves": {
+   "en": "Exam results and higher education destinations.",
+   "fr": "Les résultats aux examens et les poursuites d’études."
+  },
+  "school-board-ns1-a": {
+   "en": "The FASN School Council: role, membership and meetings.",
+   "fr": "Le conseil d’école de l’EFAN : rôle, composition et réunions."
+  },
+  "school-life-ns3": {
+   "en": "The American schools that host FASN classes.",
+   "fr": "Les établissements américains qui accueillent les classes de l’EFAN."
+  },
+  "school-newsletter": {
+   "en": "The school newsletter, year by year.",
+   "fr": "La lettre de l’école, année par année."
+  },
+  "school-project-ns1": {
+   "en": "The school project.",
+   "fr": "Le projet d’établissement."
+  },
+  "testimonies": {
+   "en": "Families and former students on life during and after FASN.",
+   "fr": "Les familles et les anciens élèves racontent la scolarité à l’EFAN et l’après."
+  },
+  "tuition-and-payment-terms": {
+   "en": "Fees and payment terms.",
+   "fr": "Les frais de scolarité et les modalités de paiement."
+  },
+  "volunteering-ns1-a": {
+   "en": "Why and how parents and students volunteer at FASN.",
+   "fr": "Pourquoi et comment parents et élèves deviennent bénévoles à l’EFAN."
+  }
+ },
+ "eyebrows": {
+  "9-elementary-school-operating-mode-ns2": "Elementary School",
+  "10-elementary-school-schedule-ns2": "Elementary School",
+  "11-elementary-school-assessment-and-report-cards-ns2": "Elementary School",
+  "12-elementary-school-operating-mode-ns2": "Middle School",
+  "13-middle-school-schedule-ns2": "Middle School",
+  "14-middle-school-assessment-and-report-cards-ns2": "Middle School",
+  "15-middle-school-dnb-middle-school-diploma-ns2": "Middle School",
+  "16-high-school-operating-mode-ns2": "High School",
+  "17-middle-school-schedule-ns2": "High School",
+  "18-high-school-assessment-and-report-cards-ns2": "High School",
+  "19-high-school-baccalaureat-ns2": "High School",
+  "20-parcoursup": "High School",
+  "21-high-school-translation-of-reports-ns2": "Admissions",
+  "22-high-school-the-american-bac-and-the-credit-system-ns2": "High School"
+ },
+ "eyebrows_fr": {
+  "Elementary School": "École élémentaire",
+  "Middle School": "Collège",
+  "High School": "Lycée",
+  "Admissions": "Admissions"
+ }
+}

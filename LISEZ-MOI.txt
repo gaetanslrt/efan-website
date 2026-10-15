@@ -1,0 +1,144 @@
+EFAN / FASN — Site bilingue
+===========================
+
+74 pages : 37 en anglais à la racine, 37 en français sous /fr/.
+Une seule source, un seul dictionnaire, un script qui régénère l'ensemble.
+
+
+Pourquoi pas un dictionnaire JavaScript ?
+-----------------------------------------
+Vous demandiez s'il fallait dupliquer chaque page, ou si un script pouvait
+retenir la langue et piocher dans un dictionnaire au chargement.
+
+La seconde solution coûte cher sur un site d'école :
+
+  - Google n'indexe que le HTML livré. Une seule URL pour deux langues, et le
+    contenu français devient quasi invisible dans les recherches — or vos pages
+    /fr/ sont indexées aujourd'hui.
+  - Un parent ne peut plus envoyer un lien vers la version française.
+  - Chaque page affiche brièvement l'anglais avant de basculer.
+  - Et surtout, cela ne réduit pas le travail : il faut traduire chaque phrase
+    de toute façon, on la range simplement ailleurs.
+
+La solution retenue garde l'avantage du dictionnaire sans ces inconvénients :
+le dictionnaire existe bien, mais il est lu **à la génération**, pas dans le
+navigateur. Vous éditez un seul endroit ; le script produit 74 vraies pages.
+
+
+Mise en ligne
+-------------
+Déposer le contenu de ce dossier à la racine du site. Les adresses sont celles
+d'aujourd'hui : /history-ns/ et /fr/history-ns/, etc. Rien ne casse.
+
+Les dossiers _source/ et le fichier build.py ne servent qu'à régénérer le site.
+Vous pouvez les mettre en ligne (ils ne contiennent rien de confidentiel) ou les
+garder hors du serveur : les pages HTML fonctionnent sans eux.
+
+Tous les liens sont relatifs : vous pouvez aussi ouvrir index.html directement
+depuis ce dossier, sans serveur, pour relire l'ensemble hors ligne.
+
+
+Modifier le site
+----------------
+    python3 build.py
+
+Il faut Python 3.8+ et BeautifulSoup (pip install beautifulsoup4 lxml).
+Le script réécrit les 74 pages en quelques secondes. Il ne touche ni assets/,
+ni media/, ni docs/.
+
+Ce que vous éditez, selon le cas :
+
+  _source/content/<page>.html   le texte d'une page, en anglais.
+                                HTML simple : <p>, <h2>, <ul>, <table>…
+                                Les liens internes s'écrivent /history-ns/ et
+                                les images /media/2025/10/photo.jpg ; le script
+                                les traduit en chemins relatifs par langue.
+
+  _source/i18n/fr.json          la traduction, phrase par phrase.
+                                La clé est la phrase anglaise, la valeur la
+                                phrase française. Les balises <strong>, <em> et
+                                <a> font partie de la phrase : l'ordre des mots
+                                reste donc libre en français.
+
+  _source/i18n/ui.json          les libellés d'interface, par langue : menus,
+                                boutons, fil d'Ariane, pied de page.
+
+  _source/i18n/home.json        tous les textes de la page d'accueil.
+
+  _source/structure.json        l'arborescence, les titres de pages et les
+                                descriptions <meta>, dans les deux langues.
+
+Si vous ajoutez une phrase anglaise sans sa traduction, le script la signale en
+fin d'exécution et laisse l'anglais en place sur la page française : rien ne
+casse, mais vous savez quoi compléter.
+
+
+Les traductions
+---------------
+454 segments, soit environ 7 500 mots, traduits intégralement. Vérifié
+automatiquement : aucune phrase anglaise ne subsiste sur les pages françaises.
+
+Les seules exceptions sont volontaires : les noms propres et les intitulés
+officiels restent dans leur langue d'origine — les noms des établissements
+américains (Great Neck Middle School), les cours américains (World History 1),
+les libellés de liens externes (« Home (tricare.mil) ») et les adresses.
+
+Les conventions françaises sont respectées : guillemets « », espaces insécables
+avant les deux-points et à l'intérieur des guillemets, majuscules à la française
+(« ministère de l'Éducation nationale »), et les niveaux scolaires donnés dans
+les deux systèmes (« de la 6e (6th grade) à la 4e (8th grade) »).
+
+Le vocabulaire a été harmonisé : EFAN en français, FASN en anglais ; cursus
+américain / cursus français ; carte scolaire pour school district ; candidat
+libre pour independent candidate.
+
+
+Le sélecteur de langue
+----------------------
+Il relie chaque page à son équivalent : depuis /20-parcoursup/ il mène à
+/fr/20-parcoursup/, et inversement — jamais à l'accueil. Les balises
+hreflang font de même pour les moteurs de recherche, et chaque page déclare
+son attribut lang, ce dont les lecteurs d'écran ont besoin pour prononcer
+correctement.
+
+
+Points à arbitrer, inchangés depuis la livraison précédente
+-----------------------------------------------------------
+1. Pages hors menu — School Board et School Project sont générées et reprises
+   dans le pied de page uniquement ; Vaccination est rattachée à Admissions.
+2. /elementary-school/ et /middle-school/ ne contenaient aucun contenu : elles
+   ne sont pas générées. /school-project-ns1/ affiche « Mise à jour en cours. »
+3. La police Public Sans vient de Google Fonts. Pour supprimer cette dépendance,
+   retirez les trois balises <link> correspondantes dans build.py, puis relancez
+   le script : la page bascule sur les polices système.
+4. Les chiffres clés de l'accueil viennent de votre FAQ 2025 et datent de
+   2024-2025. Ils se modifient dans _source/i18n/home.json.
+
+
+Corrections apportées à cette étape
+-----------------------------------
+- Les badges « Inscriptions ouvertes » et « Résultats aux examens » s'affichaient
+  en gris foncé sur fond coloré : une règle CSS plus spécifique l'emportait sur
+  la couleur du badge. Contraste rétabli, sur les deux langues.
+- Le fil d'Ariane des pages Témoignages et Contacts utiles répétait deux fois le
+  titre de la page. Corrigé.
+- Les titres français étant plus longs, la typographie de la page d'accueil
+  s'adapte désormais à la langue.
+
+
+Poids des médias
+----------------
+Les visuels ont été optimisés à cette étape : les scans de la lettre de l'école
+pesaient jusqu'à 3 Mo chacun en PNG. Ils sont désormais en JPEG de qualité
+élevée, plafonnés à 2000 px de large, et chaque page affiche une version
+allégée, l'original restant accessible au clic. Le site est passé de 36 à 23 Mo
+sans perte visible. Les références ont été mises à jour partout, y compris dans
+_source/content/.
+
+
+Vérifications
+-------------
+74 pages rendues : aucune erreur JavaScript, aucune ressource manquante, aucun
+lien ni ancre cassés, aucun débordement horizontal à 390, 820 et 1366 px, un
+seul <h1> par page. Le script build.py reproduit à l'identique les pages
+livrées : ce que vous régénérez est exactement ce que vous recevez.
