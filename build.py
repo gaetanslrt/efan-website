@@ -36,7 +36,7 @@ LANGS = ("en", "fr")
 PHONE = "(757) 230-7569"
 TEL = "+17572307569"
 MAIL = "efan.norfolk@gmail.com"
-FAQ = "docs/FAQ-2025.pdf"
+FAQ = {"fr": "docs/FAQ-EFAN-2026.pdf", "en": "docs/FAQ-FASN-2026-EN.pdf"}
 TOS = "docs/Terms-of-Service-for-EFAN-Website.pdf"
 
 BLOCKS = ["p", "li", "h2", "h3", "h4", "h5", "h6", "td", "th",
@@ -308,7 +308,7 @@ def header(lang, a_depth, p_depth, other, cur_sec=None, cur_slug=None):
         cls = " is-current" if e["slug"] == cur_slug else ""
         tabs.append(f'<li class="nav__item"><a class="nav__link{cls}" href="{h(e["slug"])}"{cur}>'
                     f'{L(e["label"], lang)}</a></li>')
-    tabs.append(f'<li class="nav__item"><a class="nav__link" href="{rel(FAQ, a_depth)}">'
+    tabs.append(f'<li class="nav__item"><a class="nav__link" href="{rel(FAQ[lang], a_depth)}">'
                 f'{t["faq"]} <span class="nav__meta">PDF</span></a></li>')
 
     other_lang = "fr" if lang == "en" else "en"
@@ -395,7 +395,7 @@ def footer(lang, a_depth, p_depth, other):
                    for e in ST["flat"] + ST["extra"])
     cols.append(f'<div class="footer__col"><p class="footer__title">{t["information"]}</p><ul>'
                 + more
-                + f'<li><a href="{rel(FAQ, a_depth)}">{t["faq"]} '
+                + f'<li><a href="{rel(FAQ[lang], a_depth)}">{t["faq"]} '
                   f'<span class="footer__meta">PDF</span></a></li></ul></div>')
 
     return f"""
@@ -619,7 +619,7 @@ def build_home(lang):
     a_depth, p_depth = (1 if lang == "fr" else 0), 0
     A = lambda p: rel(p, a_depth)
     h = lambda s: page_href(s, p_depth)
-    faq = A(FAQ)
+    faq = A(FAQ[lang])
     other = other_url(lang, None)
 
     main = f"""

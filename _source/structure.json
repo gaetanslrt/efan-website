@@ -30,9 +30,8 @@
   "parentsrepresentatives-ns1-a",
   "reussites-de-nos-eleves",
   "school-board-ns1-a",
+  "school-life-in-pictures",
   "school-life-ns3",
-  "school-newsletter",
-  "school-project-ns1",
   "testimonies",
   "tuition-and-payment-terms",
   "volunteering-ns1-a"
@@ -319,17 +318,10 @@
       },
       {
        "label": {
-        "en": "School Newsletter",
-        "fr": "La lettre de l’école"
-       },
-       "slug": "school-newsletter"
-      },
-      {
-       "label": {
         "en": "School life in pictures",
         "fr": "La vie de l’école en images"
        },
-       "slug": "/?page_id=3221"
+       "slug": "school-life-in-pictures"
       },
       {
        "label": {
@@ -436,13 +428,6 @@
     "fr": "Conseil d’école"
    },
    "slug": "school-board-ns1-a"
-  },
-  {
-   "label": {
-    "en": "School Project",
-    "fr": "Projet d’établissement"
-   },
-   "slug": "school-project-ns1"
   }
  ],
  "titles": {
@@ -570,14 +555,6 @@
    "en": "American schools",
    "fr": "Les établissements américains"
   },
-  "school-newsletter": {
-   "en": "School Newsletter",
-   "fr": "La lettre de l’école"
-  },
-  "school-project-ns1": {
-   "en": "School Project",
-   "fr": "Projet d’établissement"
-  },
   "testimonies": {
    "en": "Testimonies",
    "fr": "Témoignages"
@@ -589,6 +566,10 @@
   "volunteering-ns1-a": {
    "en": "Volunteering",
    "fr": "Bénévolat"
+  },
+  "school-life-in-pictures": {
+   "en": "School life in pictures",
+   "fr": "La vie de l’école en images"
   }
  },
  "blurbs": {
@@ -716,14 +697,6 @@
    "en": "The American schools that host FASN classes.",
    "fr": "Les établissements américains qui accueillent les classes de l’EFAN."
   },
-  "school-newsletter": {
-   "en": "The school newsletter, year by year.",
-   "fr": "La lettre de l’école, année par année."
-  },
-  "school-project-ns1": {
-   "en": "The school project.",
-   "fr": "Le projet d’établissement."
-  },
   "testimonies": {
    "en": "Families and former students on life during and after FASN.",
    "fr": "Les familles et les anciens élèves racontent la scolarité à l’EFAN et l’après."
@@ -735,6 +708,10 @@
   "volunteering-ns1-a": {
    "en": "Why and how parents and students volunteer at FASN.",
    "fr": "Pourquoi et comment parents et élèves deviennent bénévoles à l’EFAN."
+  },
+  "school-life-in-pictures": {
+   "en": "Classrooms, projects and field trips, year by year and school by school.",
+   "fr": "Les classes, les projets et les sorties, année par année et établissement par établissement."
   }
  },
  "eyebrows": {

@@ -1,7 +1,7 @@
 EFAN / FASN — Site bilingue
 ===========================
 
-74 pages : 37 en anglais à la racine, 37 en français sous /fr/.
+72 pages : 36 en anglais à la racine, 36 en français sous /fr/.
 Une seule source, un seul dictionnaire, un script qui régénère l'ensemble.
 
 
@@ -22,7 +22,7 @@ La seconde solution coûte cher sur un site d'école :
 
 La solution retenue garde l'avantage du dictionnaire sans ces inconvénients :
 le dictionnaire existe bien, mais il est lu **à la génération**, pas dans le
-navigateur. Vous éditez un seul endroit ; le script produit 74 vraies pages.
+navigateur. Vous éditez un seul endroit ; le script produit 72 vraies pages.
 
 
 Mise en ligne
@@ -43,7 +43,7 @@ Modifier le site
     python3 build.py
 
 Il faut Python 3.8+ et BeautifulSoup (pip install beautifulsoup4 lxml).
-Le script réécrit les 74 pages en quelques secondes. Il ne touche ni assets/,
+Le script réécrit les 72 pages en quelques secondes. Il ne touche ni assets/,
 ni media/, ni docs/.
 
 Ce que vous éditez, selon le cas :
@@ -65,6 +65,13 @@ Ce que vous éditez, selon le cas :
 
   _source/i18n/home.json        tous les textes de la page d'accueil.
 
+  _source/faq/faq_data.py       les questions et réponses de la FAQ, dans les
+                                deux langues, plus les effectifs du graphique.
+                                Après modification :
+                                    python3 _source/faq/faq_pdf.py
+                                régénère les deux PDF dans docs/.
+                                Nécessite playwright et pypdf.
+
   _source/structure.json        l'arborescence, les titres de pages et les
                                 descriptions <meta>, dans les deux langues.
 
@@ -75,7 +82,7 @@ casse, mais vous savez quoi compléter.
 
 Les traductions
 ---------------
-454 segments, soit environ 7 500 mots, traduits intégralement. Vérifié
+Plus de 500 segments, soit environ 8 000 mots, traduits intégralement. Vérifié
 automatiquement : aucune phrase anglaise ne subsiste sur les pages françaises.
 
 Les seules exceptions sont volontaires : les noms propres et les intitulés
@@ -126,6 +133,30 @@ Corrections apportées à cette étape
   s'adapte désormais à la langue.
 
 
+La page « La vie de l'école en images »
+---------------------------------------
+Les 78 fichiers que vous m'avez envoyés contenaient 28 photos au format HEIC
+qu'aucun outil d'image ne savait ouvrir ici : elles ont été décodées puis
+converties en JPEG. Les 7 vidéos MP4 ne sont pas intégrées — dites-moi si vous
+les voulez, elles demandent un autre traitement.
+
+54 photographies ont été retenues et réparties en dix ensembles : sciences et
+blasons à Great Neck (2026-2027) ; sortie à Jamestown et Yorktown, commémoration
+de Yorktown, Antiquité et Révolution française à Great Neck, arts et histoire à
+Crossroads, Seconde Guerre mondiale à Cox, John B. Dey, et les viennoiseries
+offertes aux établissements d'accueil (2025-2026).
+
+Chaque photo a une légende, dans les deux langues, qui décrit ce qu'on voit sans
+nommer aucun élève. Les légendes se modifient dans _source/content/
+school-life-in-pictures.html pour l'anglais et dans fr.json pour le français.
+
+Deux points à vérifier de votre côté :
+  - Plusieurs photographies montrent des élèves reconnaissables. Assurez-vous de
+    disposer des autorisations de droit à l'image avant la mise en ligne.
+  - L'affiche « Bombes, femmes et Captain America » portait les noms de deux
+    élèves en bas à droite : la photo est recadrée pour les retirer.
+
+
 Poids des médias
 ----------------
 Les visuels ont été optimisés à cette étape : les scans de la lettre de l'école
@@ -138,7 +169,7 @@ _source/content/.
 
 Vérifications
 -------------
-74 pages rendues : aucune erreur JavaScript, aucune ressource manquante, aucun
+72 pages rendues : aucune erreur JavaScript, aucune ressource manquante, aucun
 lien ni ancre cassés, aucun débordement horizontal à 390, 820 et 1366 px, un
 seul <h1> par page. Le script build.py reproduit à l'identique les pages
 livrées : ce que vous régénérez est exactement ce que vous recevez.

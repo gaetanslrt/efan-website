@@ -1292,3 +1292,144 @@ table.data p + p { margin-top: .5rem; }
 .hero__body h1 { text-wrap: balance; }
 html[lang="fr"] .hero__body h1 { font-size: clamp(1.75rem, 1.15rem + 2.5vw, 2.625rem); }
 html[lang="fr"] .page-head h1 { text-wrap: balance; }
+
+/* =========================================================================
+   20. School life in pictures
+   ========================================================================= */
+
+/* Jump list at the top of the gallery */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin: 1.75rem 0 2.5rem;
+  max-width: none !important;
+}
+.chips li { margin: 0; padding: 0; }
+.chips li::before { content: none !important; }
+.chip {
+  display: inline-block;
+  padding: .4rem .8rem;
+  background: var(--blue-975);
+  border: 1px solid var(--blue-850);
+  color: var(--blue) !important;
+  font-size: .8125rem;
+  font-weight: 600;
+  text-decoration: none !important;
+}
+.chip:hover { background: var(--blue-950); border-color: var(--blue); }
+
+/* Photo grid */
+.shots {
+  display: grid;
+  gap: 1.5rem 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  margin: 1.75rem 0 2.5rem;
+  max-width: none !important;
+}
+.shots li { margin: 0; padding: 0; }
+.shots li::before { content: none !important; }
+.shot__link {
+  display: block;
+  position: relative;
+  border: 1px solid var(--line);
+  background: var(--grey-975);
+  text-decoration: none !important;
+}
+.shot__link:hover { border-color: var(--blue); }
+.shot__link img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+.shot__link::after {
+  content: "";
+  position: absolute;
+  right: .5rem; bottom: .5rem;
+  width: 1.75rem; height: 1.75rem;
+  background: var(--blue) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7 14 5 12 5 9.5S7 5 9.5 5 14 7 14 9.5 12 14 9.5 14zm.5-7H9v2H7v1h2v2h1v-2h2V9h-2V7z'/%3E%3C/svg%3E") center/1rem no-repeat;
+  opacity: 0;
+  transition: opacity .15s;
+}
+.shot__link:hover::after, .shot__link:focus-visible::after { opacity: 1; }
+.shot__caption {
+  margin: .55rem 0 0 !important;
+  font-size: .8125rem;
+  line-height: 1.45;
+  color: var(--ink-mute);
+}
+.prose .shots h3 { margin-top: 0; }
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  background: rgba(10, 10, 25, .93);
+  padding: 1rem;
+}
+.lightbox[hidden] { display: none; }
+.lightbox__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: #fff;
+  font-size: .8125rem;
+}
+.lightbox__count { font-weight: 700; letter-spacing: .06em; }
+.lightbox__close {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  min-height: 2.25rem;
+  padding: .25rem .75rem;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.55);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.lightbox__close:hover { background: rgba(255,255,255,.15); }
+.lightbox__stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+  min-height: 0;
+  padding: .75rem 0;
+}
+.lightbox__stage img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  background: #fff;
+}
+.lightbox__nav {
+  flex: none;
+  width: 2.75rem; height: 2.75rem;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.4);
+  color: #fff;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.lightbox__nav:hover { background: rgba(255,255,255,.25); }
+.lightbox__nav[disabled] { opacity: .3; cursor: default; }
+.lightbox__caption {
+  flex: none;
+  padding-top: .75rem;
+  color: rgba(255,255,255,.92);
+  font-size: .9375rem;
+  text-align: center;
+}
+@media (max-width: 36em) {
+  .lightbox { padding: .5rem; }
+  .lightbox__nav { width: 2.25rem; height: 2.25rem; }
+}

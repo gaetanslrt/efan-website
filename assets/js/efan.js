@@ -139,3 +139,107 @@
     DESKTOP.addListener(syncBreakpoint);
   }
 })();
+
+/* =========================================================================
+   Gallery lightbox — progressive enhancement over plain image links.
+   Without JavaScript the links still open the full-size photograph.
+   ========================================================================= */
+(function () {
+  'use strict';
+
+  var links = Array.prototype.slice.call(document.querySelectorAll('.shot__link'));
+  if (!links.length) { return; }
+
+  var strings = document.documentElement.lang === 'fr'
+    ? { close: 'Fermer', prev: 'Photo précédente', next: 'Photo suivante', of: 'sur' }
+    : { close: 'Close', prev: 'Previous photo', next: 'Next photo', of: 'of' };
+
+  var box = document.createElement('div');
+  box.className = 'lightbox';
+  box.hidden = true;
+  box.setAttribute('role', 'dialog');
+  box.setAttribute('aria-modal', 'true');
+  box.innerHTML =
+    '<div class="lightbox__bar">' +
+      '<span class="lightbox__count"></span>' +
+      '<button type="button" class="lightbox__close">' + strings.close + ' ×</button>' +
+    '</div>' +
+    '<div class="lightbox__stage">' +
+      '<button type="button" class="lightbox__nav" data-dir="-1" aria-label="' + strings.prev + '">‹</button>' +
+      '<img alt="" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">' +
+      '<button type="button" class="lightbox__nav" data-dir="1" aria-label="' + strings.next + '">›</button>' +
+    '</div>' +
+    '<p class="lightbox__caption"></p>';
+  document.body.appendChild(box);
+
+  var img = box.querySelector('img');
+  var caption = box.querySelector('.lightbox__caption');
+  var count = box.querySelector('.lightbox__count');
+  var closeBtn = box.querySelector('.lightbox__close');
+  var navs = Array.prototype.slice.call(box.querySelectorAll('.lightbox__nav'));
+  var current = 0;
+  var lastFocus = null;
+
+  function captionOf(link) {
+    var li = link.closest ? link.closest('li') : null;
+    var p = li ? li.querySelector('.shot__caption') : null;
+    return p ? p.textContent.trim() : (link.querySelector('img') || {}).alt || '';
+  }
+
+  function show(i) {
+    current = (i + links.length) % links.length;
+    var link = links[current];
+    img.src = link.getAttribute('href');
+    img.alt = captionOf(link);
+    caption.textContent = captionOf(link);
+    count.textContent = (current + 1) + ' ' + strings.of + ' ' + links.length;
+  }
+
+  function open(i) {
+    lastFocus = document.activeElement;
+    show(i);
+    box.hidden = false;
+    document.body.classList.add('nav-open');
+    closeBtn.focus();
+  }
+
+  function close() {
+    box.hidden = true;
+    document.body.classList.remove('nav-open');
+    img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+    if (lastFocus && lastFocus.focus) { lastFocus.focus(); }
+  }
+
+  links.forEach(function (link, i) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      open(i);
+    });
+  });
+
+  navs.forEach(function (b) {
+    b.addEventListener('click', function () {
+      show(current + parseInt(b.getAttribute('data-dir'), 10));
+    });
+  });
+
+  closeBtn.addEventListener('click', close);
+  box.addEventListener('click', function (e) {
+    if (e.target === box || e.target.classList.contains('lightbox__stage')) { close(); }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (box.hidden) { return; }
+    if (e.key === 'Escape' || e.key === 'Esc') { close(); }
+    else if (e.key === 'ArrowLeft') { show(current - 1); }
+    else if (e.key === 'ArrowRight') { show(current + 1); }
+    else if (e.key === 'Tab') {
+      /* keep focus inside the dialog */
+      var focusable = [closeBtn].concat(navs);
+      var i = focusable.indexOf(document.activeElement);
+      e.preventDefault();
+      var next = e.shiftKey ? i - 1 : i + 1;
+      focusable[(next + focusable.length) % focusable.length].focus();
+    }
+  });
+})();
