@@ -248,6 +248,17 @@ a { color: var(--blue); }
 }
 .lang-switch a:hover { color: var(--white); text-decoration: underline; text-underline-offset: .2em; }
 
+/* Ordre fixe EN / FR : un séparateur aide à les lire comme un seul réglage. */
+.lang-switch a + span,
+.lang-switch span + a { position: relative; padding-left: .85rem; }
+.lang-switch a + span::before,
+.lang-switch span + a::before {
+  content: "/";
+  position: absolute; left: 0;
+  color: rgba(255,255,255,.45);
+  font-weight: 400;
+}
+
 .header__main-inner {
   display: flex;
   align-items: center;

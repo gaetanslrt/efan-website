@@ -102,6 +102,10 @@ libre pour independent candidate.
 
 Le sélecteur de langue
 ----------------------
+EN et FR gardent toujours la même place : seule la mise en valeur se déplace.
+La langue affichée est en blanc, l'autre en gris et cliquable. Les deux libellés
+ne s'inversent plus quand on change de langue.
+
 Il relie chaque page à son équivalent : depuis /20-parcoursup/ il mène à
 /fr/20-parcoursup/, et inversement — jamais à l'accueil. Les balises
 hreflang font de même pour les moteurs de recherche, et chaque page déclare

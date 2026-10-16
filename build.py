@@ -311,7 +311,21 @@ def header(lang, a_depth, p_depth, other, cur_sec=None, cur_slug=None):
     tabs.append(f'<li class="nav__item"><a class="nav__link" href="{rel(FAQ[lang], a_depth)}">'
                 f'{t["faq"]} <span class="nav__meta">PDF</span></a></li>')
 
-    other_lang = "fr" if lang == "en" else "en"
+    # --- sélecteur de langue : ordre fixe EN puis FR -------------------------
+    # La position ne dépend plus de la langue de la page. Pour chaque langue,
+    # c'est son rôle qui change : repère si c'est celle de la page, lien sinon.
+    LANG_LABELS = {"en": "EN", "fr": "FR"}
+
+    def lang_item(code):
+        if code == lang:
+            return (f'<span class="lang-switch__current" aria-current="true" '
+                    f'lang="{code}">{LANG_LABELS[code]}</span>')
+        return (f'<a href="{other}" lang="{code}" hreflang="{code}" '
+                f'title="{t["lang_other_title"]}">{LANG_LABELS[code]}</a>')
+
+    lang_switch = lang_item("en") + lang_item("fr")
+    # ------------------------------------------------------------------------
+
     return f"""
 <header class="header" role="banner">
 
@@ -322,8 +336,7 @@ def header(lang, a_depth, p_depth, other, cur_sec=None, cur_slug=None):
         <li><a href="tel:{TEL}" class="util-link" data-icon="phone">{PHONE}</a></li>
         <li><a href="mailto:{MAIL}" class="util-link" data-icon="mail">{MAIL}</a></li>
         <li class="lang-switch">
-          <span class="lang-switch__current" aria-current="true" lang="{t['html_lang']}">{t['lang_current']}</span>
-          <a href="{other}" lang="{other_lang}" hreflang="{other_lang}" title="{t['lang_other_title']}">{t['lang_other']}</a>
+          {lang_switch}
         </li>
       </ul>
     </div>
