@@ -16,8 +16,9 @@ _source/i18n/ui.json          les libellés d'interface (menus, boutons, pied de
 _source/i18n/home.json        les textes de la page d'accueil
 _source/structure.json        l'arborescence du site et les titres de pages
 
-Le script réécrit ensuite index.html, les 36 pages anglaises, /fr/ et les
-36 pages françaises. Les dossiers assets/, media/ et docs/ ne sont pas touchés.
+Le script réécrit ensuite index.html et les 36 pages françaises à la racine,
+/en/ et les 36 pages anglaises, ainsi que les redirections des anciennes
+adresses /fr/…. Les dossiers assets/, media/ et docs/ ne sont pas touchés.
 
 Prérequis : Python 3.8+ et BeautifulSoup   (pip install beautifulsoup4 lxml)
 """
@@ -31,7 +32,17 @@ except ImportError:
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(ROOT, "_source")
-LANGS = ("en", "fr")
+LANGS = ("fr", "en")
+# Langue servie à la racine du site ; l'autre est publiée sous /<code>/.
+DEFAULT = "fr"
+# Avant le passage du français à la racine, il vivait sous /fr/ : ces
+# anciennes adresses sont conservées sous forme de redirections.
+LEGACY_PREFIX = "fr"
+
+
+def sub(lang):
+    """Sous-dossier d'une langue : "" pour la langue par défaut, "en/" sinon."""
+    return "" if lang == DEFAULT else lang + "/"
 
 PHONE = "(757) 230-7569"
 TEL = "+17572307569"
@@ -89,8 +100,9 @@ def translate(html, slug):
             if key:
                 MISSING.append((slug, key))
             continue
-        new = BeautifulSoup(tr, "lxml")
-        nb = new.find("body") or new
+        # html.parser : contrairement à lxml récent, il n'enveloppe pas un
+        # texte nu dans un <p> (ce qui sortait le texte des <h2>, <li>…).
+        nb = BeautifulSoup(tr, "html.parser")
         el.clear()
         for child in list(nb.contents):
             el.append(child)
@@ -122,8 +134,9 @@ def home_href(page_depth):
 
 
 def other_url(lang, slug):
-    if lang == "en":
-        return "fr/" if slug is None else f"../fr/{slug}/"
+    other = "en" if lang == "fr" else "fr"
+    if lang == DEFAULT:
+        return sub(other) if slug is None else f"../{sub(other)}{slug}/"
     return "../" if slug is None else f"../../{slug}/"
 
 
@@ -557,7 +570,7 @@ def eyebrow_of(slug, lang):
 # --------------------------------------------------------------------------
 def build_page(slug, lang):
     t = UI[lang]
-    a_depth = 1 + (1 if lang == "fr" else 0)
+    a_depth = 1 + (0 if lang == DEFAULT else 1)
     p_depth = 1
 
     with open(os.path.join(SRC, "content", slug + ".html"), encoding="utf-8") as f:
@@ -594,9 +607,9 @@ def build_page(slug, lang):
         "</main>",
         footer(lang, a_depth, p_depth, other),
     ]
-    d = os.path.join(ROOT, slug) if lang == "en" else os.path.join(ROOT, "fr", slug)
+    d = os.path.join(ROOT, sub(lang), slug)
     os.makedirs(d, exist_ok=True)
-    with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
+    with open(os.path.join(d, "index.html"), "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(x for x in out if x))
 
 
@@ -629,7 +642,7 @@ HOME_JSONLD = """<script type="application/ld+json">
 def build_home(lang):
     t = UI[lang]
     k = HOME_S[lang]
-    a_depth, p_depth = (1 if lang == "fr" else 0), 0
+    a_depth, p_depth = (0 if lang == DEFAULT else 1), 0
     A = lambda p: rel(p, a_depth)
     h = lambda s: page_href(s, p_depth)
     faq = A(FAQ[lang])
@@ -797,10 +810,43 @@ def build_home(lang):
         HOME_JSONLD,
         footer(lang, a_depth, p_depth, other),
     ]
-    d = ROOT if lang == "en" else os.path.join(ROOT, "fr")
+    d = os.path.join(ROOT, sub(lang))
     os.makedirs(d, exist_ok=True)
-    with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
+    with open(os.path.join(d, "index.html"), "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(out))
+
+
+REDIRECT = """<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page déplacée</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="{to}">
+<meta http-equiv="refresh" content="0; url={to}">
+<script>location.replace("{to}" + location.hash);</script>
+</head>
+<body>
+<p>Cette page a changé d’adresse : <a href="{to}">continuer</a>.</p>
+</body>
+</html>
+"""
+
+
+def build_redirects():
+    """Anciennes adresses /fr/… → nouvelles adresses à la racine."""
+    if LEGACY_PREFIX != DEFAULT:
+        return 0
+    n = 0
+    for slug in [None] + list(PAGES):
+        to = "../" if slug is None else f"../../{slug}/"
+        d = os.path.join(ROOT, LEGACY_PREFIX, *([slug] if slug else []))
+        os.makedirs(d, exist_ok=True)
+        with open(os.path.join(d, "index.html"), "w", encoding="utf-8", newline="\n") as f:
+            f.write(REDIRECT.format(to=to))
+        n += 1
+    return n
 
 
 def main():
@@ -809,18 +855,21 @@ def main():
         for slug in PAGES:
             build_page(slug, lang)
         print(f"  {lang} : 1 + {len(PAGES)} pages")
+    n = build_redirects()
+    if n:
+        print(f"  /{LEGACY_PREFIX}/ : {n} redirections vers la racine")
 
     urls = []
     for lang in LANGS:
-        p = "/" if lang == "en" else "/fr/"
+        p = "/" + sub(lang)
         urls += [p] + [f"{p}{s}/" for s in PAGES]
-    with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as f:
+    with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8", newline="\n") as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n'
                 '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
         for u in urls:
             f.write(f"  <url><loc>{u}</loc></url>\n")
         f.write("</urlset>\n")
-    with open(os.path.join(ROOT, "robots.txt"), "w", encoding="utf-8") as f:
+    with open(os.path.join(ROOT, "robots.txt"), "w", encoding="utf-8", newline="\n") as f:
         f.write("User-agent: *\nAllow: /\nSitemap: /sitemap.xml\n")
 
     print(f"-- {len(urls)} pages générées")

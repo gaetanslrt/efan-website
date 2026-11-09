@@ -1,7 +1,8 @@
 EFAN / FASN — Site bilingue
 ===========================
 
-72 pages : 36 en anglais à la racine, 36 en français sous /fr/.
+72 pages : 36 en français à la racine, 36 en anglais sous /en/.
+Le français est la langue par défaut du site.
 Une seule source, un seul dictionnaire, un script qui régénère l'ensemble.
 
 
@@ -27,8 +28,19 @@ navigateur. Vous éditez un seul endroit ; le script produit 72 vraies pages.
 
 Mise en ligne
 -------------
-Déposer le contenu de ce dossier à la racine du site. Les adresses sont celles
-d'aujourd'hui : /history-ns/ et /fr/history-ns/, etc. Rien ne casse.
+Déposer le contenu de ce dossier à la racine du site. Les adresses sont
+/history-ns/ pour le français et /en/history-ns/ pour l'anglais, etc.
+
+Les anciennes adresses françaises (/fr/history-ns/…) restent valables : le
+dossier fr/ ne contient plus que des pages de redirection vers la racine. Les
+liens déjà envoyés aux familles et les résultats Google continuent donc de
+fonctionner ; ces pages sont marquées « noindex » et pointent vers la nouvelle
+adresse, si bien que Google remplacera progressivement les anciennes.
+
+Attention : les anciennes adresses anglaises à la racine (/20-parcoursup/)
+affichent désormais la version française. La version anglaise est sous /en/.
+
+Langue par défaut : elle se règle par la constante DEFAULT en tête de build.py.
 
 Les dossiers _source/ et le fichier build.py ne servent qu'à régénérer le site.
 Vous pouvez les mettre en ligne (ils ne contiennent rien de confidentiel) ou les
@@ -107,7 +119,7 @@ La langue affichée est en blanc, l'autre en gris et cliquable. Les deux libell�
 ne s'inversent plus quand on change de langue.
 
 Il relie chaque page à son équivalent : depuis /20-parcoursup/ il mène à
-/fr/20-parcoursup/, et inversement — jamais à l'accueil. Les balises
+/en/20-parcoursup/, et inversement — jamais à l'accueil. Les balises
 hreflang font de même pour les moteurs de recherche, et chaque page déclare
 son attribut lang, ce dont les lecteurs d'écran ont besoin pour prononcer
 correctement.
