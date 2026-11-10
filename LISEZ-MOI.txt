@@ -1,7 +1,7 @@
 EFAN / FASN — Site bilingue
 ===========================
 
-72 pages : 36 en français à la racine, 36 en anglais sous /en/.
+74 pages : 37 en français à la racine, 37 en anglais sous /en/.
 Le français est la langue par défaut du site.
 Une seule source, un seul dictionnaire, un script qui régénère l'ensemble.
 
@@ -23,7 +23,7 @@ La seconde solution coûte cher sur un site d'école :
 
 La solution retenue garde l'avantage du dictionnaire sans ces inconvénients :
 le dictionnaire existe bien, mais il est lu **à la génération**, pas dans le
-navigateur. Vous éditez un seul endroit ; le script produit 72 vraies pages.
+navigateur. Vous éditez un seul endroit ; le script produit 74 vraies pages.
 
 
 Mise en ligne
@@ -55,7 +55,7 @@ Modifier le site
     python3 build.py
 
 Il faut Python 3.8+ et BeautifulSoup (pip install beautifulsoup4 lxml).
-Le script réécrit les 72 pages en quelques secondes. Il ne touche ni assets/,
+Le script réécrit les 74 pages en quelques secondes. Il ne touche ni assets/,
 ni media/, ni docs/.
 
 Ce que vous éditez, selon le cas :
@@ -86,6 +86,9 @@ Ce que vous éditez, selon le cas :
 
   _source/structure.json        l'arborescence, les titres de pages et les
                                 descriptions <meta>, dans les deux langues.
+
+  build.py, constante REMOVED   les pages retirées du site et la page vers
+                                laquelle leur ancienne adresse redirige.
 
 Si vous ajoutez une phrase anglaise sans sa traduction, le script la signale en
 fin d'exécution et laisse l'anglais en place sur la page française : rien ne
@@ -134,8 +137,9 @@ Points à arbitrer, inchangés depuis la livraison précédente
 3. La police Public Sans vient de Google Fonts. Pour supprimer cette dépendance,
    retirez les trois balises <link> correspondantes dans build.py, puis relancez
    le script : la page bascule sur les polices système.
-4. Les chiffres clés de l'accueil viennent de votre FAQ 2025 et datent de
-   2024-2025. Ils se modifient dans _source/i18n/home.json.
+4. Les chiffres clés de l'accueil viennent de la FAQ 2026-2027 (rentrée
+   2026-2027). Les libellés se modifient dans _source/i18n/home.json, les
+   valeurs (71, ×7, 17 %, 7 %) dans build.py, fonction build_home.
 
 
 Corrections apportées à cette étape

@@ -47,8 +47,25 @@ def sub(lang):
 PHONE = "(757) 230-7569"
 TEL = "+17572307569"
 MAIL = "efan.norfolk@gmail.com"
-FAQ = {"fr": "docs/FAQ-EFAN-2026.pdf", "en": "docs/FAQ-FASN-2026-EN.pdf"}
-TOS = "docs/Terms-of-Service-for-EFAN-Website.pdf"
+CREDIT_NAME = "Gaëtan SUILLEROT"
+CREDIT_MAIL = "gaetan.slt@gmail.com"
+FAQ = {"fr": "docs/FAQ-EFAN-2026-2027.pdf", "en": "docs/FAQ-FASN-2026-2027-EN.pdf"}
+# La FAQ (PDF) s'ouvre dans un nouvel onglet : le visiteur garde le site ouvert.
+NEW_TAB = 'target="_blank" rel="noopener"'
+
+
+def new_tab_hint(lang):
+    """Annonce aux lecteurs d'écran l'ouverture dans un nouvel onglet."""
+    return f'<span class="sr-only">, {UI[lang]["new_tab"]}</span>'
+
+# Pages retirées du site : leur ancienne adresse redirige vers la page qui
+# reprend désormais leur contenu, pour ne pas casser les liens déjà envoyés.
+REMOVED = {
+    # Les bulletins se fournissent désormais en français (VBCPS les traduit).
+    "21-high-school-translation-of-reports-ns2": "36-enrollment-in-the-american-schools",
+}
+# Conditions d'utilisation : une page du site (_source/content/terms-of-service.html).
+TOS = "terms-of-service"
 
 BLOCKS = ["p", "li", "h2", "h3", "h4", "h5", "h6", "td", "th",
           "caption", "figcaption", "blockquote", "footer"]
@@ -321,8 +338,8 @@ def header(lang, a_depth, p_depth, other, cur_sec=None, cur_slug=None):
         cls = " is-current" if e["slug"] == cur_slug else ""
         tabs.append(f'<li class="nav__item"><a class="nav__link{cls}" href="{h(e["slug"])}"{cur}>'
                     f'{L(e["label"], lang)}</a></li>')
-    tabs.append(f'<li class="nav__item"><a class="nav__link" href="{rel(FAQ[lang], a_depth)}">'
-                f'{t["faq"]} <span class="nav__meta">PDF</span></a></li>')
+    tabs.append(f'<li class="nav__item"><a class="nav__link" href="{rel(FAQ[lang], a_depth)}" {NEW_TAB}>'
+                f'{t["faq"]} <span class="nav__meta">PDF</span>{new_tab_hint(lang)}</a></li>')
 
     # --- sélecteur de langue : ordre fixe EN puis FR -------------------------
     # La position ne dépend plus de la langue de la page. Pour chaque langue,
@@ -421,8 +438,8 @@ def footer(lang, a_depth, p_depth, other):
                    for e in ST["flat"] + ST["extra"])
     cols.append(f'<div class="footer__col"><p class="footer__title">{t["information"]}</p><ul>'
                 + more
-                + f'<li><a href="{rel(FAQ[lang], a_depth)}">{t["faq"]} '
-                  f'<span class="footer__meta">PDF</span></a></li></ul></div>')
+                + f'<li><a href="{rel(FAQ[lang], a_depth)}" {NEW_TAB}>{t["faq"]} '
+                  f'<span class="footer__meta">PDF</span>{new_tab_hint(lang)}</a></li></ul></div>')
 
     return f"""
 <footer class="footer" id="footer" role="contentinfo">
@@ -445,9 +462,12 @@ def footer(lang, a_depth, p_depth, other):
     </div>
 
     <div class="footer__bottom">
-      <p class="footer__copy">{t['copyright']}</p>
+      <div>
+        <p class="footer__copy">{t['copyright']}</p>
+        <p class="footer__credit">{t['credit']} {CREDIT_NAME} · <a href="mailto:{CREDIT_MAIL}">{CREDIT_MAIL}</a></p>
+      </div>
       <ul class="footer__legal">
-        <li><a href="{rel(TOS, a_depth)}">{t['terms']} <span class="footer__meta">PDF</span></a></li>
+        <li><a href="{page_href(TOS, p_depth)}">{t['terms']}</a></li>
         <li><a href="{other}">{t['other_version']}</a></li>
         <li><a href="#content">{t['back_to_top']}</a></li>
       </ul>
@@ -692,12 +712,12 @@ def build_home(lang):
       <h2 class="section__title" id="figures-title">{k['fig_title']}</h2>
       <p class="section__intro">{k['fig_intro']}</p>
       <ul class="figures">
-        <li class="figure"><p class="figure__value">61</p><p class="figure__label">{k['fig1']}</p></li>
-        <li class="figure"><p class="figure__value">&times;6</p><p class="figure__label">{k['fig2']}</p></li>
-        <li class="figure"><p class="figure__value">25<span class="figure__unit">%</span></p><p class="figure__label">{k['fig3']}</p></li>
-        <li class="figure"><p class="figure__value">22<span class="figure__unit">%</span></p><p class="figure__label">{k['fig4']}</p></li>
+        <li class="figure"><p class="figure__value">71</p><p class="figure__label">{k['fig1']}</p></li>
+        <li class="figure"><p class="figure__value">&times;7</p><p class="figure__label">{k['fig2']}</p></li>
+        <li class="figure"><p class="figure__value">17<span class="figure__unit">%</span></p><p class="figure__label">{k['fig3']}</p></li>
+        <li class="figure"><p class="figure__value">7<span class="figure__unit">%</span></p><p class="figure__label">{k['fig4']}</p></li>
       </ul>
-      <p class="source">{k['source']} <a href="{faq}">{k['source_link']}</a></p>
+      <p class="source">{k['source']} <a href="{faq}" {NEW_TAB}>{k['source_link']}{new_tab_hint(lang)}</a></p>
     </div>
   </section>
 
@@ -769,7 +789,7 @@ def build_home(lang):
         <li class="tile"><h3 class="tile__title"><a href="{h('tuition-and-payment-terms')}">{k['q5']}</a></h3><p class="tile__text">{k['q5d']}</p></li>
         <li class="tile"><h3 class="tile__title"><a href="{h('testimonies')}">{k['q6']}</a></h3><p class="tile__text">{k['q6d']}</p></li>
         <li class="tile"><h3 class="tile__title"><a href="{h('volunteering-ns1-a')}">{k['q7']}</a></h3><p class="tile__text">{k['q7d']}</p></li>
-        <li class="tile"><h3 class="tile__title"><a href="{faq}">{k['q8']} <span class="tile__meta">PDF</span></a></h3><p class="tile__text">{k['q8d']}</p></li>
+        <li class="tile"><h3 class="tile__title"><a href="{faq}" {NEW_TAB}>{k['q8']} <span class="tile__meta">PDF</span>{new_tab_hint(lang)}</a></h3><p class="tile__text">{k['q8d']}</p></li>
       </ul>
     </div>
   </section>
@@ -834,17 +854,25 @@ REDIRECT = """<!DOCTYPE html>
 """
 
 
+def write_redirect(d, to):
+    os.makedirs(d, exist_ok=True)
+    with open(os.path.join(d, "index.html"), "w", encoding="utf-8", newline="\n") as f:
+        f.write(REDIRECT.format(to=to))
+
+
 def build_redirects():
-    """Anciennes adresses /fr/… → nouvelles adresses à la racine."""
-    if LEGACY_PREFIX != DEFAULT:
-        return 0
+    """Anciennes adresses /fr/… → nouvelles adresses à la racine, et pages retirées."""
     n = 0
-    for slug in [None] + list(PAGES):
-        to = "../" if slug is None else f"../../{slug}/"
-        d = os.path.join(ROOT, LEGACY_PREFIX, *([slug] if slug else []))
-        os.makedirs(d, exist_ok=True)
-        with open(os.path.join(d, "index.html"), "w", encoding="utf-8", newline="\n") as f:
-            f.write(REDIRECT.format(to=to))
+    if LEGACY_PREFIX == DEFAULT:
+        for slug in [None] + list(PAGES):
+            to = "../" if slug is None else f"../../{slug}/"
+            write_redirect(os.path.join(ROOT, LEGACY_PREFIX, *([slug] if slug else [])), to)
+            n += 1
+    for old, new in REMOVED.items():
+        for lang in LANGS:
+            write_redirect(os.path.join(ROOT, sub(lang), old), f"../{new}/")
+        if LEGACY_PREFIX == DEFAULT:
+            write_redirect(os.path.join(ROOT, LEGACY_PREFIX, old), f"../../{new}/")
         n += 1
     return n
 

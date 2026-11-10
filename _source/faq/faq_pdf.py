@@ -7,14 +7,39 @@ Needs Python 3.8+, Playwright and pypdf:
     pip install playwright pypdf && playwright install chromium
 """
 
-import os, sys, base64
+import os, re, sys, base64, tempfile
+from pathlib import Path
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from faq_data import DATA, ENROLMENT
+from faq_data import DATA, ENROLMENT, ADDRESSES
 
 SITE = os.path.abspath(os.path.join(HERE, "..", ".."))
 OUT = os.path.join(SITE, "docs")
+
+
+NB = "\u00a0"
+
+
+def fr_typo(x):
+    """French spacing: no-break space before : ; ? ! % $ and inside « », in 8 h 05."""
+    if isinstance(x, str):
+        x = re.sub(r" ([:;?!»%$])", NB + r"\1", x)
+        x = re.sub(r"« ", "«" + NB, x)
+        return re.sub(r"(\d) h (\d)", r"\1" + NB + "h" + NB + r"\2", x)
+    if isinstance(x, (list, tuple)):
+        return type(x)(fr_typo(i) for i in x)
+    if isinstance(x, dict):
+        return {k: (v if k in ("lang", "site", "contact") else fr_typo(v)) for k, v in x.items()}
+    return x
+
+
+def text(lang):
+    return fr_typo(DATA[lang]) if lang == "fr" else DATA[lang]
+
+
+def paras(x):
+    return [] if not x else ([x] if isinstance(x, str) else list(x))
 
 
 def b64(path):
@@ -115,7 +140,10 @@ ul { margin: 0; padding: 0; list-style: none; }
 .section + .section { margin-top: 9mm; }
 
 /* --------------------------------------------------------------------- QA */
-.qa { page-break-inside: avoid; margin-bottom: 6mm; }
+.qa { margin-bottom: 6mm; }
+/* Long answers may span two pages; a question never ends a page on its own. */
+.qa__q { break-after: avoid; page-break-after: avoid; }
+.qa p, .qa li { break-inside: avoid; page-break-inside: avoid; }
 .qa__q {
   font-size: 10.4pt; font-weight: 700; color: #161616;
   margin-bottom: 2mm; line-height: 1.35;
@@ -128,6 +156,9 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .qa__lead--long { display: block; background: none; padding: 0; color: #161616; font-weight: 600; }
 .qa__text { color: #3a3a3a; max-width: 165mm; }
+.qa__text + .qa__text, .qa ul + .qa__text { margin-top: 2mm; }
+.addr { margin-top: 2mm; }
+.addr li { font-size: 8.8pt; color: #3a3a3a; margin-bottom: 1mm; }
 .qa ul { margin-top: 1mm; }
 .qa li {
   position: relative; padding-left: 5mm; margin-bottom: 1.4mm; color: #3a3a3a;
@@ -193,7 +224,7 @@ def chart(rows):
 
 
 def build_cover(lang, logo_b64):
-    d = DATA[lang]
+    d = text(lang)
     return (f'<!DOCTYPE html><html lang="{d["lang"]}"><head><meta charset="utf-8">'
             f"<style>{CSS}</style></head><body style='margin:0'>"
             f'<section class="cover">'
@@ -213,7 +244,7 @@ def build_cover(lang, logo_b64):
 
 
 def build_html(lang, logo_b64):
-    d = DATA[lang]
+    d = text(lang)
     parts = [f'<!DOCTYPE html><html lang="{d["lang"]}"><head><meta charset="utf-8">',
              f"<title>{d['title']} — {d['school']}</title><style>{CSS}</style></head><body>"]
 
@@ -236,20 +267,25 @@ def build_html(lang, logo_b64):
         parts.append('<section class="section">')
         parts.append(f'<div class="band"><span class="band__n">{s["n"].zfill(2)}</span>'
                      f'<h2>{s["t"]}</h2></div>')
-        for q, bullets, lead in s["qa"]:
+        for q, bullets, lead, *after in s["qa"]:
             parts.append('<div class="qa">')
             parts.append(f'<p class="qa__q">{q}</p>')
-            if lead:
-                cls = "qa__lead qa__lead--long" if len(lead) > 40 else "qa__lead"
-                parts.append(f'<p class="{cls}">{lead}</p>')
+            for para in paras(lead):
+                cls = "qa__text" if len(para) > 40 else "qa__lead"
+                parts.append(f'<p class="{cls}">{para}</p>')
             if bullets:
                 parts.append("<ul>" + "".join(f"<li>{b}</li>" for b in bullets) + "</ul>")
+            for para in paras(after[0] if after else None):
+                parts.append(f'<p class="qa__text">{para}</p>')
             parts.append("</div>")
         parts.append("</section>")
 
     parts.append(
         f'<div class="callout" style="margin-top:9mm">'
-        f'<h3>{d["closing_title"]}</h3><p>{d["closing"]}</p></div>'
+        f'<h3>{d["closing_title"]}</h3><p>{d["closing"]}</p>'
+        f'<p style="margin-top:3mm"><em>{d["addresses_title"]}</em></p><ul class="addr">'
+        + "".join(f"<li><strong>{n}</strong> — {a} ({w})</li>" for n, a, w in ADDRESSES)
+        + '</ul></div>'
         f'<p class="sources">{d["sources"]}</p>')
 
     parts.append("</body></html>")
@@ -270,25 +306,25 @@ FOOTER = """<div style="width:100%;font-size:7pt;font-family:Inter,sans-serif;co
 def render(lang, logo_b64):
     from playwright.sync_api import sync_playwright
     from pypdf import PdfWriter, PdfReader
-    d = DATA[lang]
-    name = "FAQ-EFAN-2026.pdf" if lang == "fr" else "FAQ-FASN-2026-EN.pdf"
+    d = text(lang)
+    name = "FAQ-EFAN-2026-2027.pdf" if lang == "fr" else "FAQ-FASN-2026-2027-EN.pdf"
     dest = os.path.join(OUT, name)
 
-    cover_html = f"/tmp/faq-cover-{lang}.html"
-    body_html = f"/tmp/faq-body-{lang}.html"
-    open(cover_html, "w", encoding="utf-8").write(build_cover(lang, logo_b64))
-    open(body_html, "w", encoding="utf-8").write(build_html(lang, logo_b64))
-    cover_pdf, body_pdf = f"/tmp/faq-cover-{lang}.pdf", f"/tmp/faq-body-{lang}.pdf"
+    tmp = Path(tempfile.mkdtemp(prefix="faq-"))
+    cover_html, body_html = tmp / f"faq-cover-{lang}.html", tmp / f"faq-body-{lang}.html"
+    cover_html.write_text(build_cover(lang, logo_b64), encoding="utf-8")
+    body_html.write_text(build_html(lang, logo_b64), encoding="utf-8")
+    cover_pdf, body_pdf = str(tmp / f"faq-cover-{lang}.pdf"), str(tmp / f"faq-body-{lang}.pdf")
 
     with sync_playwright() as pw:
         b = pw.chromium.launch()
         p = b.new_page()
         # cover: full bleed, no running header or footer
-        p.goto("file://" + cover_html, wait_until="load")
+        p.goto(cover_html.as_uri(), wait_until="load")
         p.pdf(path=cover_pdf, format="A4", print_background=True,
               margin={"top": "0", "bottom": "0", "left": "0", "right": "0"})
         # body: running header and footer, page x of y
-        p.goto("file://" + body_html, wait_until="load")
+        p.goto(body_html.as_uri(), wait_until="load")
         p.pdf(path=body_pdf, format="A4", print_background=True,
               display_header_footer=True,
               header_template=HEADER.format(**d),

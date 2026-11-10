@@ -34,6 +34,7 @@
   "full_directory": "Full directory",
   "footer_desc": "The French American School of Norfolk teaches the French Ministry of National Education curriculum, from Kindergarten through 12th grade, in partnership with Norfolk Public Schools and Virginia Beach City Public Schools.",
   "copyright": "Copyright © 2026 | EFAN",
+  "credit": "Website by",
   "terms": "Terms of service",
   "other_version": "Version française",
   "back_to_top": "Back to top",
@@ -41,7 +42,8 @@
   "faq": "FAQ",
   "empty_page": "This page has no content yet on the current site.",
   "view_full_size": "View full size",
-  "home_meta": "Francophone à Hampton Roads ? Inscrivez votre enfant à l’EFAN. The French American School of Norfolk teaches the French national curriculum inside Norfolk and Virginia Beach public schools, Kindergarten through 12th grade."
+  "home_meta": "Francophone à Hampton Roads ? Inscrivez votre enfant à l’EFAN. The French American School of Norfolk teaches the French national curriculum inside Norfolk and Virginia Beach public schools, Kindergarten through 12th grade.",
+  "new_tab": "opens in a new tab"
  },
  "fr": {
   "html_lang": "fr",
@@ -78,6 +80,7 @@
   "full_directory": "Annuaire complet",
   "footer_desc": "L’École Franco-Américaine de Norfolk dispense le programme du ministère de l’Éducation nationale, de la grande section à la terminale, en partenariat avec les Norfolk Public Schools et les Virginia Beach City Public Schools.",
   "copyright": "Copyright © 2026 | EFAN",
+  "credit": "Site réalisé par",
   "terms": "Conditions d’utilisation",
   "other_version": "English version",
   "back_to_top": "Haut de page",
@@ -85,6 +88,7 @@
   "faq": "FAQ",
   "empty_page": "Cette page n’a pas encore de contenu sur le site actuel.",
   "view_full_size": "Voir en grand",
-  "home_meta": "Francophone à Hampton Roads ? Inscrivez votre enfant à l’EFAN. L’École Franco-Américaine de Norfolk dispense le programme de l’Éducation nationale au sein des écoles publiques de Norfolk et de Virginia Beach, de la grande section à la terminale."
+  "home_meta": "Francophone à Hampton Roads ? Inscrivez votre enfant à l’EFAN. L’École Franco-Américaine de Norfolk dispense le programme de l’Éducation nationale au sein des écoles publiques de Norfolk et de Virginia Beach, de la grande section à la terminale.",
+  "new_tab": "s’ouvre dans un nouvel onglet"
  }
 }

@@ -11,7 +11,6 @@
   "18-high-school-assessment-and-report-cards-ns2",
   "19-high-school-baccalaureat-ns2",
   "20-parcoursup",
-  "21-high-school-translation-of-reports-ns2",
   "22-high-school-the-american-bac-and-the-credit-system-ns2",
   "24-1-norfolk",
   "24-2-virginia-beach",
@@ -34,7 +33,9 @@
   "school-life-ns3",
   "testimonies",
   "tuition-and-payment-terms",
-  "volunteering-ns1-a"
+  "volunteering-ns1-a",
+  "conferences-emc",
+  "terms-of-service"
  ],
  "nav": [
   {
@@ -96,14 +97,14 @@
       {
        "label": {
         "en": "Parents’ Representatives",
-        "fr": "Représentants des parents"
+        "fr": "Représentants des parents d’élèves"
        },
        "slug": "parentsrepresentatives-ns1-a"
       },
       {
        "label": {
         "en": "Volunteering",
-        "fr": "Bénévolat"
+        "fr": "Volontariat"
        },
        "slug": "volunteering-ns1-a"
       }
@@ -134,8 +135,8 @@
    },
    "footer_link": {
     "label": {
-     "en": "Réussites de nos élèves",
-     "fr": "Réussites de nos élèves"
+     "en": "Exam results and further studies",
+     "fr": "Résultats aux examens et poursuite d’études"
     },
     "slug": "reussites-de-nos-eleves"
    },
@@ -234,8 +235,8 @@
       },
       {
        "label": {
-        "en": "French Baccalauréat",
-        "fr": "Baccalauréat français"
+        "en": "Early French exams and Baccalauréat",
+        "fr": "Épreuves anticipées et baccalauréat"
        },
        "slug": "19-high-school-baccalaureat-ns2"
       },
@@ -248,8 +249,8 @@
       },
       {
        "label": {
-        "en": "The American “bac” and the Credit System",
-        "fr": "Le « bac » américain et les crédits"
+        "en": "The American diploma and credits",
+        "fr": "Le diplôme américain et les crédits"
        },
        "slug": "22-high-school-the-american-bac-and-the-credit-system-ns2"
       }
@@ -326,9 +327,16 @@
       {
        "label": {
         "en": "Art Competition",
-        "fr": "Concours artistique"
+        "fr": "Concours d’art"
        },
        "slug": "art-competition"
+      },
+      {
+       "label": {
+        "en": "EMC conferences",
+        "fr": "Conférences EMC"
+       },
+       "slug": "conferences-emc"
       }
      ]
     }
@@ -362,8 +370,8 @@
      "items": [
       {
        "label": {
-        "en": "Tuition and Payment Terms",
-        "fr": "Frais de scolarité et paiement"
+        "en": "Registration fees and payment",
+        "fr": "Frais d’inscription et règlement"
        },
        "slug": "tuition-and-payment-terms"
       },
@@ -385,13 +393,6 @@
         "fr": "Inscription dans les établissements américains"
        },
        "slug": "36-enrollment-in-the-american-schools"
-      },
-      {
-       "label": {
-        "en": "Translation of reports",
-        "fr": "Traduction des bulletins"
-       },
-       "slug": "21-high-school-translation-of-reports-ns2"
       },
       {
        "label": {
@@ -424,8 +425,8 @@
  "extra": [
   {
    "label": {
-    "en": "School Board",
-    "fr": "Conseil d’école"
+    "en": "School Council",
+    "fr": "Conseil d’établissement"
    },
    "slug": "school-board-ns1-a"
   }
@@ -468,20 +469,16 @@
    "fr": "Évaluations et bulletins"
   },
   "19-high-school-baccalaureat-ns2": {
-   "en": "French Baccalauréat",
-   "fr": "Baccalauréat français"
+   "en": "Early French exams and Baccalauréat",
+   "fr": "Épreuves anticipées de français et baccalauréat"
   },
   "20-parcoursup": {
    "en": "Parcoursup",
    "fr": "Parcoursup"
   },
-  "21-high-school-translation-of-reports-ns2": {
-   "en": "Translation of reports",
-   "fr": "Traduction des bulletins"
-  },
   "22-high-school-the-american-bac-and-the-credit-system-ns2": {
-   "en": "The American High School Diploma and the credit system",
-   "fr": "Le high school diploma américain et le système de crédits"
+   "en": "The American diploma and the credit system",
+   "fr": "Le diplôme américain et le système des crédits"
   },
   "24-1-norfolk": {
    "en": "Norfolk academic calendar",
@@ -521,7 +518,7 @@
   },
   "art-competition": {
    "en": "Art Competition",
-   "fr": "Concours artistique"
+   "fr": "Concours d’art"
   },
   "board-of-directors-ns1-a": {
    "en": "Board of Directors",
@@ -541,15 +538,15 @@
   },
   "parentsrepresentatives-ns1-a": {
    "en": "Parents’ representatives",
-   "fr": "Représentants des parents"
+   "fr": "Représentants des parents d’élèves"
   },
   "reussites-de-nos-eleves": {
-   "en": "Réussites de nos élèves",
-   "fr": "Réussites de nos élèves"
+   "en": "Exam results and further studies",
+   "fr": "Résultats aux examens et poursuite d’études"
   },
   "school-board-ns1-a": {
-   "en": "School Board",
-   "fr": "Conseil d’école"
+   "en": "School Council",
+   "fr": "Conseil d’établissement"
   },
   "school-life-ns3": {
    "en": "American schools",
@@ -560,16 +557,24 @@
    "fr": "Témoignages"
   },
   "tuition-and-payment-terms": {
-   "en": "Tuition and payment terms",
-   "fr": "Frais de scolarité et paiement"
+   "en": "Registration fees and payment terms",
+   "fr": "Frais d’inscription et modalités de règlement"
   },
   "volunteering-ns1-a": {
    "en": "Volunteering",
-   "fr": "Bénévolat"
+   "fr": "Volontariat"
   },
   "school-life-in-pictures": {
    "en": "School life in pictures",
    "fr": "La vie de l’école en images"
+  },
+  "conferences-emc": {
+   "en": "EMC conferences (moral and civic education)",
+   "fr": "Conférences EMC (enseignement moral et civique)"
+  },
+  "terms-of-service": {
+   "en": "Terms of Service",
+   "fr": "Conditions d’utilisation"
   }
  },
  "blurbs": {
@@ -586,8 +591,8 @@
    "fr": "Le fonctionnement du collège, au jour le jour."
   },
   "13-middle-school-schedule-ns2": {
-   "en": "Middle school timetables at Great Neck and Crossroads.",
-   "fr": "Les emplois du temps au collège, à Great Neck et à Crossroads."
+   "en": "Middle school timetables at Crossroads and Great Neck.",
+   "fr": "Les emplois du temps au collège, à Crossroads et à Great Neck."
   },
   "14-middle-school-assessment-and-report-cards-ns2": {
    "en": "How middle school students are assessed in both curricula.",
@@ -610,20 +615,16 @@
    "fr": "Comment les lycéens sont évalués dans les deux cursus."
   },
   "19-high-school-baccalaureat-ns2": {
-   "en": "Preparing and sitting the French Baccalauréat from Norfolk.",
-   "fr": "Préparer et passer le baccalauréat français depuis Norfolk."
+   "en": "Preparing and sitting the early French exams and the Baccalauréat as an independent candidate.",
+   "fr": "Préparer et passer les épreuves anticipées de français et le baccalauréat en candidat libre."
   },
   "20-parcoursup": {
    "en": "How Parcoursup works for a student enrolled at FASN.",
    "fr": "Comment fonctionne Parcoursup pour un élève scolarisé à l’EFAN."
   },
-  "21-high-school-translation-of-reports-ns2": {
-   "en": "Getting American report cards translated.",
-   "fr": "Faire traduire les bulletins scolaires."
-  },
   "22-high-school-the-american-bac-and-the-credit-system-ns2": {
-   "en": "The American High School Diploma and the credit system.",
-   "fr": "Le high school diploma américain et le système de crédits."
+   "en": "The American high school diploma, credits and SOL tests.",
+   "fr": "Le diplôme américain, les crédits et les examens SOL."
   },
   "24-1-norfolk": {
    "en": "Norfolk Public Schools academic calendar.",
@@ -638,8 +639,8 @@
    "fr": "Les règles de carte scolaire et l’accès au bus scolaire."
   },
   "36-enrollment-in-the-american-schools": {
-   "en": "Registering with Norfolk or Virginia Beach public schools.",
-   "fr": "S’inscrire auprès des écoles publiques de Norfolk ou de Virginia Beach."
+   "en": "The five steps to enroll in a Norfolk or Virginia Beach public school.",
+   "fr": "Les cinq étapes de l’inscription dans une école publique de Norfolk ou de Virginia Beach."
   },
   "37-vaccination": {
    "en": "Vaccination requirements before leaving and after arriving.",
@@ -662,8 +663,8 @@
    "fr": "Ce qu’est l’EFAN, pourquoi les familles la rejoignent et à qui elle s’adresse."
   },
   "art-competition": {
-   "en": "The art competition organised by FASN students.",
-   "fr": "Le concours artistique organisé par les élèves de l’EFAN."
+   "en": "The art competition organized by FASN students.",
+   "fr": "Le concours d’art organisé par les élèves de l’EFAN."
   },
   "board-of-directors-ns1-a": {
    "en": "The Board of Directors and the role of the Mission Laïque Française.",
@@ -691,27 +692,35 @@
   },
   "school-board-ns1-a": {
    "en": "The FASN School Council: role, membership and meetings.",
-   "fr": "Le conseil d’école de l’EFAN : rôle, composition et réunions."
+   "fr": "Le conseil d’établissement de l’EFAN : rôle, composition et réunions."
   },
   "school-life-ns3": {
    "en": "The American schools that host FASN classes.",
    "fr": "Les établissements américains qui accueillent les classes de l’EFAN."
   },
   "testimonies": {
-   "en": "Families and former students on life during and after FASN.",
-   "fr": "Les familles et les anciens élèves racontent la scolarité à l’EFAN et l’après."
+   "en": "Results of the end-of-year survey of parents and students.",
+   "fr": "Les résultats de l’enquête de fin d’année auprès des parents et des élèves."
   },
   "tuition-and-payment-terms": {
-   "en": "Fees and payment terms.",
-   "fr": "Les frais de scolarité et les modalités de paiement."
+   "en": "Registration fees, payment terms and refunds.",
+   "fr": "Les frais d’inscription, les modalités de règlement et le remboursement."
   },
   "volunteering-ns1-a": {
-   "en": "Why and how parents and students volunteer at FASN.",
-   "fr": "Pourquoi et comment parents et élèves deviennent bénévoles à l’EFAN."
+   "en": "How students and parents volunteer at FASN.",
+   "fr": "Comment élèves et parents s’engagent comme volontaires à l’EFAN."
   },
   "school-life-in-pictures": {
-   "en": "Classrooms, projects and field trips, year by year and school by school.",
-   "fr": "Les classes, les projets et les sorties, année par année et établissement par établissement."
+   "en": "Classroom projects, field trips and events, year by year.",
+   "fr": "Les projets des classes, les sorties et les événements, année par année."
+  },
+  "conferences-emc": {
+   "en": "Talks by NATO military personnel that deepen the moral and civic education curriculum.",
+   "fr": "Des interventions de militaires de l’OTAN pour approfondir le programme d’enseignement moral et civique."
+  },
+  "terms-of-service": {
+   "en": "Terms of service and privacy policy of the French-American School of Norfolk website.",
+   "fr": "Conditions d’utilisation et politique de confidentialité du site de l’École Franco-Américaine de Norfolk."
   }
  },
  "eyebrows": {
@@ -727,13 +736,14 @@
   "18-high-school-assessment-and-report-cards-ns2": "High School",
   "19-high-school-baccalaureat-ns2": "High School",
   "20-parcoursup": "High School",
-  "21-high-school-translation-of-reports-ns2": "Admissions",
-  "22-high-school-the-american-bac-and-the-credit-system-ns2": "High School"
+  "22-high-school-the-american-bac-and-the-credit-system-ns2": "High School",
+  "terms-of-service": "Legal information"
  },
  "eyebrows_fr": {
   "Elementary School": "École élémentaire",
   "Middle School": "Collège",
   "High School": "Lycée",
-  "Admissions": "Admissions"
+  "Admissions": "Admissions",
+  "Legal information": "Informations légales"
  }
 }
