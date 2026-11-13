@@ -3,6 +3,109 @@
    Mega menus (desktop) + slide-in panel with accordions (mobile).
    No dependencies.
    ========================================================================= */
+
+/* =========================================================================
+   Accessibility settings — high contrast and dyslexia-friendly font.
+   The choice is stored in localStorage and applied by a small script in
+   <head> before first paint; this part drives the panel in the header.
+   ========================================================================= */
+(function () {
+  'use strict';
+
+  var KEY = 'efan-a11y';
+  var root = document.documentElement;
+  var toggle = document.querySelector('.a11y__toggle');
+  var panel = document.getElementById('a11y-panel');
+  if (!toggle || !panel) { return; }
+
+  var radios = Array.prototype.slice.call(panel.querySelectorAll('input[type="radio"]'));
+  var prefersMore = window.matchMedia ? window.matchMedia('(prefers-contrast: more)') : null;
+
+  function stored() {
+    try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; }
+  }
+
+  function save(s) {
+    try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) { /* private mode */ }
+  }
+
+  function settings() {
+    var s = stored();
+    return {
+      contrast: s.contrast || (prefersMore && prefersMore.matches ? 'high' : 'standard'),
+      font: s.font || 'standard'
+    };
+  }
+
+  function apply(s) {
+    if (s.contrast === 'high') { root.setAttribute('data-contrast', 'high'); }
+    else { root.removeAttribute('data-contrast'); }
+    if (s.font === 'dyslexic') { root.setAttribute('data-font', 'dyslexic'); }
+    else { root.removeAttribute('data-font'); }
+    radios.forEach(function (r) {
+      r.checked = s[r.name.replace('a11y-', '')] === r.value;
+    });
+  }
+
+  radios.forEach(function (r) {
+    r.addEventListener('change', function () {
+      var s = stored();
+      s[r.name.replace('a11y-', '')] = r.value;
+      save(s);
+      apply(settings());
+    });
+  });
+
+  /* ------------------------------------------------------------- panel */
+  function isOpen() { return toggle.getAttribute('aria-expanded') === 'true'; }
+
+  function open() {
+    toggle.setAttribute('aria-expanded', 'true');
+    panel.hidden = false;
+  }
+
+  function close(returnFocus) {
+    toggle.setAttribute('aria-expanded', 'false');
+    panel.hidden = true;
+    if (returnFocus) { toggle.focus(); }
+  }
+
+  toggle.addEventListener('click', function () {
+    if (isOpen()) { close(false); } else { open(); }
+  });
+
+  panel.querySelector('.a11y-panel__close').addEventListener('click', function () {
+    close(true);
+  });
+
+  panel.querySelector('.a11y-panel__reset').addEventListener('click', function () {
+    try { localStorage.removeItem(KEY); } catch (e) { /* ignore */ }
+    apply(settings());
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if ((e.key === 'Escape' || e.key === 'Esc') && isOpen()) {
+      close(panel.contains(document.activeElement) || document.activeElement === toggle);
+    }
+  });
+
+  document.addEventListener('click', function (e) {
+    if (isOpen() && !panel.contains(e.target) && !toggle.contains(e.target)) { close(false); }
+  });
+
+  document.addEventListener('focusin', function (e) {
+    if (isOpen() && !panel.contains(e.target) && e.target !== toggle) { close(false); }
+  });
+
+  /* Keep several open tabs in step. */
+  window.addEventListener('storage', function (e) {
+    if (e.key === KEY || e.key === null) { apply(settings()); }
+  });
+
+  apply(settings());
+  toggle.hidden = false;
+})();
+
 (function () {
   'use strict';
 

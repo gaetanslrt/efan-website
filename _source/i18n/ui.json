@@ -43,7 +43,18 @@
   "empty_page": "This page has no content yet on the current site.",
   "view_full_size": "View full size",
   "home_meta": "Francophone à Hampton Roads ? Inscrivez votre enfant à l’EFAN. The French American School of Norfolk teaches the French national curriculum inside Norfolk and Virginia Beach public schools, Kindergarten through 12th grade.",
-  "new_tab": "opens in a new tab"
+  "new_tab": "opens in a new tab",
+  "a11y_button": "Accessibility",
+  "a11y_title": "Display settings",
+  "a11y_contrast": "Contrast",
+  "a11y_standard": "Standard",
+  "a11y_contrast_high": "High contrast",
+  "a11y_contrast_high_hint": "Darker text, stronger borders, underlined links",
+  "a11y_font": "Font",
+  "a11y_font_dys": "Dyslexia-friendly",
+  "a11y_font_dys_hint": "OpenDyslexic typeface, wider spacing",
+  "a11y_note": "Your choice is remembered on this device.",
+  "a11y_reset": "Reset"
  },
  "fr": {
   "html_lang": "fr",
@@ -89,6 +100,17 @@
   "empty_page": "Cette page n’a pas encore de contenu sur le site actuel.",
   "view_full_size": "Voir en grand",
   "home_meta": "Francophone à Hampton Roads ? Inscrivez votre enfant à l’EFAN. L’École Franco-Américaine de Norfolk dispense le programme de l’Éducation nationale au sein des écoles publiques de Norfolk et de Virginia Beach, de la grande section à la terminale.",
-  "new_tab": "s’ouvre dans un nouvel onglet"
+  "new_tab": "s’ouvre dans un nouvel onglet",
+  "a11y_button": "Accessibilité",
+  "a11y_title": "Paramètres d’affichage",
+  "a11y_contrast": "Contrastes",
+  "a11y_standard": "Standard",
+  "a11y_contrast_high": "Contrastes renforcés",
+  "a11y_contrast_high_hint": "Texte plus foncé, bordures marquées, liens soulignés",
+  "a11y_font": "Police",
+  "a11y_font_dys": "Adaptée à la dyslexie",
+  "a11y_font_dys_hint": "Police OpenDyslexic, espacement accru",
+  "a11y_note": "Votre choix est mémorisé sur cet appareil.",
+  "a11y_reset": "Réinitialiser"
  }
 }

@@ -1595,3 +1595,177 @@ html[lang="fr"] .page-head h1 { text-wrap: balance; }
   .legal-toc__list li:first-child { border-top: 0; }
   .legal-toc__list li::before { top: .62rem; }
 }
+
+/* =========================================================================
+   18. Accessibility settings
+   Panel in the header utility bar, plus two display modes set on <html>:
+     data-contrast="high"   darker text, stronger rules, underlined links
+     data-font="dyslexic"   OpenDyslexic typeface and wider text spacing
+   The font files are downloaded only when the dyslexia mode is in use.
+   ========================================================================= */
+
+/* OpenDyslexic, SIL Open Font License 1.1 (assets/fonts/OFL.txt) */
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("../fonts/OpenDyslexic-Regular.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("../fonts/OpenDyslexic-Italic.woff2") format("woff2");
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("../fonts/OpenDyslexic-Bold.woff2") format("woff2");
+  font-weight: 500 800; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("../fonts/OpenDyslexic-Bold-Italic.woff2") format("woff2");
+  font-weight: 500 800; font-style: italic; font-display: swap;
+}
+
+/* ---------------------------------------------------------------- panel */
+.header__utility-inner { position: relative; }
+
+.a11y__toggle {
+  min-height: 2rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+.a11y__toggle[hidden] { display: none; }
+.a11y__toggle[aria-expanded="true"] .a11y__label { text-decoration: underline; text-underline-offset: .2em; }
+.util-link[data-icon="a11y"]::before {
+  width: 1.125rem; height: 1.125rem;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 1.8a8.2 8.2 0 1 1 0 16.4 8.2 8.2 0 0 1 0-16.4zM12 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM6.6 9.2l-.3 1.5c1.4.4 2.9.6 4.4.7V14l-1.4 4.7 1.5.4L12 15l1.2 4.1 1.5-.4-1.4-4.7v-2.6c1.5-.1 3-.3 4.4-.7l-.3-1.5c-1.7.5-3.6.7-5.4.7s-3.7-.2-5.4-.7z'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 1.8a8.2 8.2 0 1 1 0 16.4 8.2 8.2 0 0 1 0-16.4zM12 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM6.6 9.2l-.3 1.5c1.4.4 2.9.6 4.4.7V14l-1.4 4.7 1.5.4L12 15l1.2 4.1 1.5-.4-1.4-4.7v-2.6c1.5-.1 3-.3 4.4-.7l-.3-1.5c-1.7.5-3.6.7-5.4.7s-3.7-.2-5.4-.7z'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+/* Small phones: icon only; the name stays available to screen readers. */
+@media (max-width: 30em) {
+  .a11y__label {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
+  }
+  .util-link[data-icon="a11y"]::before { width: 1.375rem; height: 1.375rem; }
+}
+
+.a11y-panel {
+  position: absolute;
+  top: 100%;
+  right: 1rem;
+  z-index: 150;
+  width: min(23rem, calc(100vw - 2rem));
+  padding: 1.25rem;
+  background: var(--white);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  border-top: 4px solid var(--blue);
+  box-shadow: 0 16px 32px -12px rgba(0,0,20,.3);
+  font-size: .9375rem;
+  line-height: 1.45;
+  text-align: left;
+}
+@media (min-width: 48em) { .a11y-panel { right: var(--gutter); } }
+.a11y-panel[hidden] { display: none; }
+
+.a11y-panel__title { margin: 0 0 1rem; font-size: 1.0625rem; font-weight: 700; }
+
+.a11y-panel__group { margin: 0 0 1rem; padding: 0; border: 0; min-width: 0; }
+.a11y-panel__group legend {
+  margin-bottom: .5rem; padding: 0;
+  font-size: .8125rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--blue);
+}
+
+.a11y-option {
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+  margin-bottom: .375rem;
+  padding: .625rem .75rem;
+  border: 1px solid var(--line);
+  cursor: pointer;
+}
+.a11y-option:last-child { margin-bottom: 0; }
+.a11y-option:hover { border-color: var(--blue); }
+.a11y-option:has(input:checked) { border-color: var(--blue); background: var(--blue-975); box-shadow: inset 3px 0 0 var(--blue); }
+.a11y-option:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+.a11y-option input {
+  flex: none;
+  width: 1.125rem; height: 1.125rem;
+  margin: .15rem 0 0;
+  accent-color: var(--blue);
+  cursor: pointer;
+}
+.a11y-option:has(input:focus-visible) input { outline: none; box-shadow: none; }
+.a11y-option__text { display: flex; flex-direction: column; gap: .125rem; }
+.a11y-option__label { font-weight: 600; }
+.a11y-option__hint { font-size: .8125rem; color: var(--ink-soft); }
+/* Preview the typeface right in the option. */
+.a11y-option--dys .a11y-option__label { font-family: "OpenDyslexic", var(--font); font-weight: 400; }
+
+.a11y-panel__note { margin: 0 0 1rem; font-size: .8125rem; color: var(--ink-soft); }
+.a11y-panel__foot { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .5rem; }
+.a11y-panel__foot .btn { min-height: 2.5rem; padding: .5rem 1rem; font-size: .875rem; }
+
+/* ------------------------------------------------- dyslexia-friendly font */
+:root[data-font="dyslexic"] {
+  --font: "OpenDyslexic", "Comic Sans MS", Verdana, sans-serif;
+}
+/* OpenDyslexic is already widely spaced: only the line height grows
+   (WCAG 1.4.12), and the tracking added for capitals is removed. */
+:root[data-font="dyslexic"] :where(p, li, dd, dt, td, th, figcaption, blockquote, label) { line-height: 1.75; }
+:root[data-font="dyslexic"] :where(h1, h2, h3, h4) { line-height: 1.35; }
+/* Whole words in capitals lose their shape: keep normal case
+   (British Dyslexia Association style guide). */
+:root[data-font="dyslexic"] body * { text-transform: none !important; letter-spacing: 0 !important; }
+/* Italics are hard to read for many dyslexic readers: use weight instead. */
+:root[data-font="dyslexic"] :where(em, i, cite) { font-style: normal; font-weight: 700; }
+
+/* --------------------------------------------------------- high contrast */
+:root[data-contrast="high"] {
+  --ink:         #000000;
+  --ink-soft:    #000000;
+  --ink-mute:    #1f1f1f;
+  --line:        #6a6a6a;
+  --line-strong: #000000;
+  --blue-hover:  #000091;
+  --blue-active: #00006b;
+  --blue-850:    #000091;
+  --red:         #a6000a;
+  --green:       #0b4d23;
+  --focus:       #000000;
+}
+:root[data-contrast="high"] :where(a, button, input, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--white);
+}
+/* On the blue utility bar a black ring would vanish: use white. */
+:root[data-contrast="high"] .header__utility :focus-visible { outline-color: var(--white); box-shadow: none; }
+:root[data-contrast="high"] .header__utility .a11y-panel :focus-visible { outline-color: var(--focus); }
+:root[data-contrast="high"] .header__tagline,
+:root[data-contrast="high"] .lang-switch a,
+:root[data-contrast="high"] .lang-switch a + span::before,
+:root[data-contrast="high"] .lang-switch span + a::before { color: var(--white); }
+:root[data-contrast="high"] .lang-switch a { text-decoration: underline; text-underline-offset: .2em; }
+:root[data-contrast="high"] .lang-switch { border-left-color: var(--white); }
+/* Links are recognisable without relying on colour (WCAG 1.4.1). */
+:root[data-contrast="high"] :where(main, .footer) a:not(.btn) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .2em;
+}
+:root[data-contrast="high"] :where(main, .footer) a:not(.btn):hover { text-decoration-thickness: 3px; }
+:root[data-contrast="high"] .btn--secondary,
+:root[data-contrast="high"] .btn--tertiary { border-width: 2px; border-color: currentColor; }
+:root[data-contrast="high"] .a11y-option { border-color: var(--line-strong); }
+
+@media print {
+  .a11y, .a11y-panel { display: none !important; }
+}

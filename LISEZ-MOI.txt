@@ -128,6 +128,29 @@ son attribut lang, ce dont les lecteurs d'écran ont besoin pour prononcer
 correctement.
 
 
+Accessibilité : contrastes et police pour lecteurs dyslexiques
+-------------------------------------------------------------
+Un bouton « Accessibilité » (« Accessibility » en anglais) figure dans le
+bandeau bleu, à côté du sélecteur de langue. Il ouvre un panneau à deux
+réglages, appliqués immédiatement à tout le site :
+
+  - Contrastes renforcés : texte noir, bordures marquées, liens toujours
+    soulignés (repérables sans la couleur), anneau de focus plus épais.
+  - Police adaptée à la dyslexie : police OpenDyslexic, interligne plus grand,
+    pas de mots entièrement en capitales ni d'italique.
+
+Le choix est mémorisé dans le navigateur (localStorage) et appliqué avant le
+premier affichage : pas de clignotement d'une page à l'autre. Sans choix
+enregistré, le site suit la préférence « contraste élevé » du système.
+Sur petit écran, le bouton n'affiche que son pictogramme ; son nom reste lu
+par les lecteurs d'écran. Sans JavaScript, le bouton n'apparaît pas.
+
+La police est hébergée sur le site (assets/fonts/, licence SIL OFL, fichier
+OFL.txt joint) : aucun service externe, et elle n'est téléchargée que par les
+visiteurs qui l'activent. Les libellés se modifient dans _source/i18n/ui.json
+(clés a11y_…), les styles en fin de assets/css/efan.css.
+
+
 Points à arbitrer, inchangés depuis la livraison précédente
 -----------------------------------------------------------
 1. Pages hors menu — School Board et School Project sont générées et reprises

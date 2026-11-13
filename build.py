@@ -67,6 +67,57 @@ REMOVED = {
 # Conditions d'utilisation : une page du site (_source/content/terms-of-service.html).
 TOS = "terms-of-service"
 
+# Réglages d'affichage (contrastes, police dyslexie), mémorisés dans le
+# navigateur. Ce script, placé dans <head>, les applique avant le premier
+# affichage : la page ne « clignote » pas entre deux styles. Sans choix
+# enregistré, on suit la préférence « contraste élevé » du système.
+A11Y_BOOT = ("<script>(function(){try{var d=document.documentElement,"
+             "s=JSON.parse(localStorage.getItem('efan-a11y')||'{}'),"
+             "c=s.contrast||(window.matchMedia&&matchMedia('(prefers-contrast: more)').matches?'high':'');"
+             "if(c==='high')d.setAttribute('data-contrast','high');"
+             "if(s.font==='dyslexic')d.setAttribute('data-font','dyslexic');"
+             "}catch(e){}})();</script>")
+
+
+def a11y_control(lang):
+    """Bouton « Accessibilité » du bandeau et son panneau de réglages.
+
+    Masqué tant que le JavaScript ne l'a pas activé : sans script, il ne
+    servirait à rien. Les réglages sont de simples boutons radio, utilisables
+    au clavier et annoncés correctement par les lecteurs d'écran."""
+    t = UI[lang]
+
+    def option(group, value, label, hint=None, extra_cls=""):
+        checked = " checked" if value == "standard" else ""
+        hint_html = f'<span class="a11y-option__hint">{hint}</span>' if hint else ""
+        return (f'<label class="a11y-option{extra_cls}">'
+                f'<input type="radio" name="a11y-{group}" value="{value}"{checked}>'
+                f'<span class="a11y-option__text"><span class="a11y-option__label">{label}</span>'
+                f'{hint_html}</span></label>')
+
+    return f"""<li class="a11y">
+          <button type="button" class="util-link a11y__toggle" data-icon="a11y" aria-expanded="false" aria-controls="a11y-panel" hidden><span class="a11y__label">{t['a11y_button']}</span></button>
+          <div class="a11y-panel" id="a11y-panel" role="group" aria-labelledby="a11y-title" hidden>
+            <p class="a11y-panel__title" id="a11y-title">{t['a11y_title']}</p>
+            <fieldset class="a11y-panel__group">
+              <legend>{t['a11y_contrast']}</legend>
+              {option("contrast", "standard", t['a11y_standard'])}
+              {option("contrast", "high", t['a11y_contrast_high'], t['a11y_contrast_high_hint'])}
+            </fieldset>
+            <fieldset class="a11y-panel__group">
+              <legend>{t['a11y_font']}</legend>
+              {option("font", "standard", t['a11y_standard'])}
+              {option("font", "dyslexic", t['a11y_font_dys'], t['a11y_font_dys_hint'], " a11y-option--dys")}
+            </fieldset>
+            <p class="a11y-panel__note">{t['a11y_note']}</p>
+            <div class="a11y-panel__foot">
+              <button type="button" class="btn btn--tertiary a11y-panel__reset">{t['a11y_reset']}</button>
+              <button type="button" class="btn btn--secondary a11y-panel__close">{t['close']}</button>
+            </div>
+          </div>
+        </li>"""
+
+
 BLOCKS = ["p", "li", "h2", "h3", "h4", "h5", "h6", "td", "th",
           "caption", "figcaption", "blockquote", "footer"]
 
@@ -276,6 +327,7 @@ def head(title, description, lang, a_depth, other, extra=""):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
 <link rel="stylesheet" href="{rel('assets/css/efan.css', a_depth)}">
+{A11Y_BOOT}
 {extra}
 <noscript><style>
   .nav {{ position: static !important; transform: none !important; visibility: visible !important;
@@ -365,6 +417,7 @@ def header(lang, a_depth, p_depth, other, cur_sec=None, cur_slug=None):
       <ul class="header__utility-links">
         <li><a href="tel:{TEL}" class="util-link" data-icon="phone">{PHONE}</a></li>
         <li><a href="mailto:{MAIL}" class="util-link" data-icon="mail">{MAIL}</a></li>
+        {a11y_control(lang)}
         <li class="lang-switch">
           {lang_switch}
         </li>

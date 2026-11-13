@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
 <link rel="stylesheet" href="../../assets/css/efan.css">
+<script>(function(){try{var d=document.documentElement,s=JSON.parse(localStorage.getItem('efan-a11y')||'{}'),c=s.contrast||(window.matchMedia&&matchMedia('(prefers-contrast: more)').matches?'high':'');if(c==='high')d.setAttribute('data-contrast','high');if(s.font==='dyslexic')d.setAttribute('data-font','dyslexic');}catch(e){}})();</script>
 
 <noscript><style>
   .nav { position: static !important; transform: none !important; visibility: visible !important;
@@ -40,6 +41,27 @@
       <ul class="header__utility-links">
         <li><a href="tel:+17572307569" class="util-link" data-icon="phone">(757) 230-7569</a></li>
         <li><a href="mailto:efan.norfolk@gmail.com" class="util-link" data-icon="mail">efan.norfolk@gmail.com</a></li>
+        <li class="a11y">
+          <button type="button" class="util-link a11y__toggle" data-icon="a11y" aria-expanded="false" aria-controls="a11y-panel" hidden><span class="a11y__label">Accessibility</span></button>
+          <div class="a11y-panel" id="a11y-panel" role="group" aria-labelledby="a11y-title" hidden>
+            <p class="a11y-panel__title" id="a11y-title">Display settings</p>
+            <fieldset class="a11y-panel__group">
+              <legend>Contrast</legend>
+              <label class="a11y-option"><input type="radio" name="a11y-contrast" value="standard" checked><span class="a11y-option__text"><span class="a11y-option__label">Standard</span></span></label>
+              <label class="a11y-option"><input type="radio" name="a11y-contrast" value="high"><span class="a11y-option__text"><span class="a11y-option__label">High contrast</span><span class="a11y-option__hint">Darker text, stronger borders, underlined links</span></span></label>
+            </fieldset>
+            <fieldset class="a11y-panel__group">
+              <legend>Font</legend>
+              <label class="a11y-option"><input type="radio" name="a11y-font" value="standard" checked><span class="a11y-option__text"><span class="a11y-option__label">Standard</span></span></label>
+              <label class="a11y-option a11y-option--dys"><input type="radio" name="a11y-font" value="dyslexic"><span class="a11y-option__text"><span class="a11y-option__label">Dyslexia-friendly</span><span class="a11y-option__hint">OpenDyslexic typeface, wider spacing</span></span></label>
+            </fieldset>
+            <p class="a11y-panel__note">Your choice is remembered on this device.</p>
+            <div class="a11y-panel__foot">
+              <button type="button" class="btn btn--tertiary a11y-panel__reset">Reset</button>
+              <button type="button" class="btn btn--secondary a11y-panel__close">Close</button>
+            </div>
+          </div>
+        </li>
         <li class="lang-switch">
           <span class="lang-switch__current" aria-current="true" lang="en">EN</span><a href="../../testimonies/" lang="fr" hreflang="fr" title="Voir cette page en français">FR</a>
         </li>
