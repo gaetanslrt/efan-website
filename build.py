@@ -15,10 +15,11 @@ _source/i18n/fr.json          la traduction de chaque phrase
 _source/i18n/ui.json          les libellés d'interface (menus, boutons, pied de page)
 _source/i18n/home.json        les textes de la page d'accueil
 _source/structure.json        l'arborescence du site et les titres de pages
+_source/redirects.json        les anciennes adresses et leur nouvelle destination
 
 Le script réécrit ensuite index.html et les 36 pages françaises à la racine,
-/en/ et les 36 pages anglaises, ainsi que les redirections des anciennes
-adresses /fr/…. Les dossiers assets/, media/ et docs/ ne sont pas touchés.
+/en/ et les 36 pages anglaises, ainsi que le fichier .htaccess qui redirige
+les anciennes adresses (301). Les dossiers assets/ et media/ ne sont pas touchés.
 
 Prérequis : Python 3.8+ et BeautifulSoup   (pip install beautifulsoup4 lxml)
 """
@@ -49,7 +50,9 @@ TEL = "+17572307569"
 MAIL = "efan.norfolk@gmail.com"
 CREDIT_NAME = "Gaëtan SUILLEROT"
 CREDIT_MAIL = "gaetan.slt@gmail.com"
-FAQ = {"fr": "docs/FAQ-EFAN-2026-2027.pdf", "en": "docs/FAQ-FASN-2026-2027-EN.pdf"}
+FAQ = {"fr": "media/documents/faq-efan-2026-2027.pdf", "en": "media/documents/faq-fasn-2026-2027-en.pdf"}
+# Images du thème (logo, favicons, accueil, partenaires).
+SITE_IMG = "media/site/"
 # La FAQ (PDF) s'ouvre dans un nouvel onglet : le visiteur garde le site ouvert.
 NEW_TAB = 'target="_blank" rel="noopener"'
 
@@ -58,12 +61,6 @@ def new_tab_hint(lang):
     """Annonce aux lecteurs d'écran l'ouverture dans un nouvel onglet."""
     return f'<span class="sr-only">, {UI[lang]["new_tab"]}</span>'
 
-# Pages retirées du site : leur ancienne adresse redirige vers la page qui
-# reprend désormais leur contenu, pour ne pas casser les liens déjà envoyés.
-REMOVED = {
-    # Les bulletins se fournissent désormais en français (VBCPS les traduit).
-    "21-high-school-translation-of-reports-ns2": "36-enrollment-in-the-american-schools",
-}
 # Conditions d'utilisation : une page du site (_source/content/terms-of-service.html).
 TOS = "terms-of-service"
 
@@ -131,6 +128,7 @@ ST = load("structure.json")
 UI = load(os.path.join("i18n", "ui.json"))
 HOME_S = load(os.path.join("i18n", "home.json"))
 FR_RAW = load(os.path.join("i18n", "fr.json"))
+REDIRECTS = load("redirects.json")
 
 PAGES = ST["pages"]
 SLUG_SET = set(PAGES)
@@ -209,10 +207,12 @@ def other_url(lang, slug):
 
 
 def variant_for(media_path, want):
-    """Use the lighter copy of an image when one was generated."""
-    inner = media_path[len("/media/"):]
-    stem, ext = os.path.splitext(inner)
-    cand = f"media/_{want}/{stem}{ext}"
+    """Use the lighter copy of an image when one was generated.
+
+    La version allégée se range à côté de l'original, suffixée de sa largeur :
+    media/team/anne-hazet.jpg -> media/team/anne-hazet-480.jpg"""
+    stem, ext = os.path.splitext(media_path.lstrip("/"))
+    cand = f"{stem}-{want}{ext}"
     return cand if os.path.exists(os.path.join(ROOT, cand)) else media_path.lstrip("/")
 
 
@@ -320,8 +320,8 @@ def head(title, description, lang, a_depth, other, extra=""):
 <title>{title} — {t['site_title']}</title>
 <meta name="description" content="{description}">
 <meta name="theme-color" content="#000091">
-<link rel="icon" href="{rel('assets/img/favicon-32.png', a_depth)}" sizes="32x32">
-<link rel="apple-touch-icon" href="{rel('assets/img/favicon-180.png', a_depth)}">
+<link rel="icon" href="{rel(SITE_IMG + 'favicon-32.png', a_depth)}" sizes="32x32">
+<link rel="apple-touch-icon" href="{rel(SITE_IMG + 'favicon-180.png', a_depth)}">
 <link rel="alternate" hreflang="{other_lang}" href="{other}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -429,7 +429,7 @@ def header(lang, a_depth, p_depth, other, cur_sec=None, cur_slug=None):
     <div class="container header__main-inner">
       <div class="brand-wrap">
         <a class="brand" href="{home_href(p_depth)}" aria-label="{t['home_aria']}">
-          <img src="{rel('assets/img/logo-efan.png', a_depth)}" alt="{t['brand_alt']}" width="1148" height="376">
+          <img src="{rel(SITE_IMG + 'logo-efan.png', a_depth)}" alt="{t['brand_alt']}" width="1148" height="376">
         </a>
         <p class="brand__desc">
           <strong>{t['brand_strong']}</strong>
@@ -500,7 +500,7 @@ def footer(lang, a_depth, p_depth, other):
 
     <div class="footer__top">
       <div class="footer__brand">
-        <img src="{rel('assets/img/logo-efan.png', a_depth)}" alt="{t['brand_alt']}" width="1148" height="376">
+        <img src="{rel(SITE_IMG + 'logo-efan.png', a_depth)}" alt="{t['brand_alt']}" width="1148" height="376">
         <p class="footer__desc">{t['footer_desc']}</p>
         <ul class="footer__contact">
           <li><a href="tel:{TEL}">{PHONE}</a></li>
@@ -556,7 +556,7 @@ def contact_strip(lang, p_depth, grey=True):
       </div>
       <div class="contact__item">
         <p class="contact__label">{t['useful_label']}</p>
-        <p class="contact__value"><a class="link link--arrow" href="{page_href('38-useful-contacts', p_depth)}">{t['full_directory']}</a></p>
+        <p class="contact__value"><a class="link link--arrow" href="{page_href('useful-contacts', p_depth)}">{t['full_directory']}</a></p>
       </div>
     </div>
   </div>
@@ -692,7 +692,7 @@ HOME_EXTRA = """<meta property="og:type" content="website">
 <meta property="og:site_name" content="{og_site}">
 <meta property="og:title" content="{og_title}">
 <meta property="og:description" content="{og_desc}">
-<meta property="og:image" content="assets/img/classroom-1280.jpg">
+<meta property="og:image" content="media/site/classroom-1280.jpg">
 <meta name="twitter:card" content="summary_large_image">"""
 
 HOME_JSONLD = """<script type="application/ld+json">
@@ -704,8 +704,8 @@ HOME_JSONLD = """<script type="application/ld+json">
   "description": "The French American School of Norfolk teaches the French Ministry of National Education curriculum, Kindergarten through 12th grade, in partnership with Norfolk Public Schools and Virginia Beach City Public Schools.",
   "telephone": "+1-757-230-7569",
   "email": "efan.norfolk@gmail.com",
-  "logo": "assets/img/logo-efan.png",
-  "image": "assets/img/classroom-1280.jpg",
+  "logo": "media/site/logo-efan.png",
+  "image": "media/site/classroom-1280.jpg",
   "areaServed": ["Norfolk, Virginia", "Virginia Beach, Virginia"],
   "openingHours": "Mo-Fr 09:00-17:00"
 }
@@ -733,12 +733,12 @@ def build_home(lang):
         <p class="hero__sub">{k['sub']}</p>
         <div class="hero__actions">
           <a class="btn btn--primary" href="{h('enrollment-french-american-school-of-norfolk')}">{k['cta1']}</a>
-          <a class="btn btn--secondary" href="{h('a-propos-2-projet-detablissement')}">{k['cta2']}</a>
+          <a class="btn btn--secondary" href="{h('a-propos-projet-detablissement')}">{k['cta2']}</a>
         </div>
       </div>
       <figure class="hero__figure">
-        <img src="{A('assets/img/classroom-980.jpg')}"
-          srcset="{A('assets/img/classroom-480.jpg')} 480w, {A('assets/img/classroom-980.jpg')} 980w, {A('assets/img/classroom-1280.jpg')} 1280w"
+        <img src="{A(SITE_IMG + 'classroom-980.jpg')}"
+          srcset="{A(SITE_IMG + 'classroom-480.jpg')} 480w, {A(SITE_IMG + 'classroom-980.jpg')} 980w, {A(SITE_IMG + 'classroom-1280.jpg')} 1280w"
           sizes="(max-width: 62rem) 100vw, 44vw"
           alt="{k['hero_alt']}" width="980" height="920" loading="eager">
       </figure>
@@ -820,10 +820,10 @@ def build_home(lang):
             <li>Great Neck Middle School</li>
             <li>Frank W. Cox High School</li>
           </ul>
-          <p><a class="link link--arrow" href="{h('school-life-ns3')}">{k['ab_link']}</a></p>
+          <p><a class="link link--arrow" href="{h('school-life')}">{k['ab_link']}</a></p>
         </div>
         <figure class="split__figure">
-          <img src="{A('assets/img/school-bus.jpg')}" alt="{k['ab_alt']}" width="480" height="480" loading="lazy">
+          <img src="{A(SITE_IMG + 'school-bus.jpg')}" alt="{k['ab_alt']}" width="480" height="480" loading="lazy">
           <figcaption>{k['ab_cap']}</figcaption>
         </figure>
       </div>
@@ -835,13 +835,13 @@ def build_home(lang):
       <h2 class="section__title" id="quick-title">{k['q_title']}</h2>
       <p class="section__intro">{k['q_intro']}</p>
       <ul class="tiles">
-        <li class="tile"><h3 class="tile__title"><a href="{h('9-elementary-school-operating-mode-ns2')}">{k['q1']}</a></h3><p class="tile__text">{k['q1d']}</p></li>
-        <li class="tile"><h3 class="tile__title"><a href="{h('13-middle-school-schedule-ns2')}">{k['q2']}</a></h3><p class="tile__text">{k['q2d']}</p></li>
-        <li class="tile"><h3 class="tile__title"><a href="{h('19-high-school-baccalaureat-ns2')}">{k['q3']}</a></h3><p class="tile__text">{k['q3d']}</p></li>
-        <li class="tile"><h3 class="tile__title"><a href="{h('24-school-district-and-transportation')}">{k['q4']}</a></h3><p class="tile__text">{k['q4d']}</p></li>
+        <li class="tile"><h3 class="tile__title"><a href="{h('elementary-school-operating-mode')}">{k['q1']}</a></h3><p class="tile__text">{k['q1d']}</p></li>
+        <li class="tile"><h3 class="tile__title"><a href="{h('middle-school-schedule')}">{k['q2']}</a></h3><p class="tile__text">{k['q2d']}</p></li>
+        <li class="tile"><h3 class="tile__title"><a href="{h('high-school-baccalaureat')}">{k['q3']}</a></h3><p class="tile__text">{k['q3d']}</p></li>
+        <li class="tile"><h3 class="tile__title"><a href="{h('school-district-and-transportation')}">{k['q4']}</a></h3><p class="tile__text">{k['q4d']}</p></li>
         <li class="tile"><h3 class="tile__title"><a href="{h('tuition-and-payment-terms')}">{k['q5']}</a></h3><p class="tile__text">{k['q5d']}</p></li>
         <li class="tile"><h3 class="tile__title"><a href="{h('testimonies')}">{k['q6']}</a></h3><p class="tile__text">{k['q6d']}</p></li>
-        <li class="tile"><h3 class="tile__title"><a href="{h('volunteering-ns1-a')}">{k['q7']}</a></h3><p class="tile__text">{k['q7d']}</p></li>
+        <li class="tile"><h3 class="tile__title"><a href="{h('volunteering')}">{k['q7']}</a></h3><p class="tile__text">{k['q7d']}</p></li>
         <li class="tile"><h3 class="tile__title"><a href="{faq}" {NEW_TAB}>{k['q8']} <span class="tile__meta">PDF</span>{new_tab_hint(lang)}</a></h3><p class="tile__text">{k['q8d']}</p></li>
       </ul>
     </div>
@@ -852,12 +852,12 @@ def build_home(lang):
       <h2 class="section__title" id="partners-title">{k['p_title']}</h2>
       <p class="section__intro">{k['p_intro']}</p>
       <ul class="partners">
-        <li class="partner"><img src="{A('assets/img/partners/ministere-education-nationale.png')}" alt="Ministère de l’Éducation nationale et de la Jeunesse" loading="lazy"></li>
-        <li class="partner"><img src="{A('assets/img/partners/ministere-des-armees.png')}" alt="Ministère des Armées" loading="lazy"></li>
-        <li class="partner"><img src="{A('assets/img/partners/mlfmonde.png')}" alt="Réseau mlfmonde — MLF, OSUI, MLCI, MLF America" loading="lazy"></li>
-        <li class="partner"><img src="{A('assets/img/partners/norfolk-public-schools.png')}" alt="Norfolk Public Schools" loading="lazy"></li>
-        <li class="partner"><img src="{A('assets/img/partners/virginia-beach-city-public-schools.png')}" alt="Virginia Beach City Public Schools" loading="lazy"></li>
-        <li class="partner"><img src="{A('assets/img/partners/alliance-francaise-hampton-roads.png')}" alt="Alliance Française Hampton Roads" loading="lazy"></li>
+        <li class="partner"><img src="{A(SITE_IMG + 'partners/ministere-education-nationale.png')}" alt="Ministère de l’Éducation nationale et de la Jeunesse" loading="lazy"></li>
+        <li class="partner"><img src="{A(SITE_IMG + 'partners/ministere-des-armees.png')}" alt="Ministère des Armées" loading="lazy"></li>
+        <li class="partner"><img src="{A(SITE_IMG + 'partners/mlfmonde.png')}" alt="Réseau mlfmonde — MLF, OSUI, MLCI, MLF America" loading="lazy"></li>
+        <li class="partner"><img src="{A(SITE_IMG + 'partners/norfolk-public-schools.png')}" alt="Norfolk Public Schools" loading="lazy"></li>
+        <li class="partner"><img src="{A(SITE_IMG + 'partners/virginia-beach-city-public-schools.png')}" alt="Virginia Beach City Public Schools" loading="lazy"></li>
+        <li class="partner"><img src="{A(SITE_IMG + 'partners/alliance-francaise-hampton-roads.png')}" alt="Alliance Française Hampton Roads" loading="lazy"></li>
       </ul>
     </div>
   </section>
@@ -889,44 +889,51 @@ def build_home(lang):
         f.write("\n".join(out))
 
 
-REDIRECT = """<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Page déplacée</title>
-<meta name="robots" content="noindex">
-<link rel="canonical" href="{to}">
-<meta http-equiv="refresh" content="0; url={to}">
-<script>location.replace("{to}" + location.hash);</script>
-</head>
-<body>
-<p>Cette page a changé d’adresse : <a href="{to}">continuer</a>.</p>
-</body>
-</html>
-"""
+def rx(path):
+    """Échappe un chemin pour une expression régulière Apache (espaces compris)."""
+    return re.sub(r"([.^$*+?()\[\]{}|\\])", r"\\\1", path)
 
 
-def write_redirect(d, to):
-    os.makedirs(d, exist_ok=True)
-    with open(os.path.join(d, "index.html"), "w", encoding="utf-8", newline="\n") as f:
-        f.write(REDIRECT.format(to=to))
+def build_htaccess():
+    """Redirections permanentes (301) des anciennes adresses, dans .htaccess.
 
-
-def build_redirects():
-    """Anciennes adresses /fr/… → nouvelles adresses à la racine, et pages retirées."""
+    Pages renommées ou retirées, médias déplacés, et anciennes adresses /fr/…
+    (le français vivait sous /fr/ avant de passer à la racine). Les règles
+    sont lues dans _source/redirects.json ; le contenu éventuel de
+    _source/htaccess-extra.txt (réglages propres au serveur) est placé en tête."""
+    lines = ["# Généré par build.py à partir de _source/redirects.json : ne pas modifier ici.",
+             "# Réglages propres au serveur : _source/htaccess-extra.txt.", ""]
+    extra = os.path.join(SRC, "htaccess-extra.txt")
+    if os.path.exists(extra):
+        with open(extra, encoding="utf-8") as f:
+            lines += [f.read().rstrip(), ""]
+    legacy = LEGACY_PREFIX == DEFAULT
     n = 0
-    if LEGACY_PREFIX == DEFAULT:
-        for slug in [None] + list(PAGES):
-            to = "../" if slug is None else f"../../{slug}/"
-            write_redirect(os.path.join(ROOT, LEGACY_PREFIX, *([slug] if slug else [])), to)
-            n += 1
-    for old, new in REMOVED.items():
+    lines += ["<IfModule mod_alias.c>", "", "# Pages renommées ou retirées"]
+    for old, new in REDIRECTS["pages"].items():
+        assert new in SLUG_SET, f"redirects.json : page inconnue « {new} »"
         for lang in LANGS:
-            write_redirect(os.path.join(ROOT, sub(lang), old), f"../{new}/")
-        if LEGACY_PREFIX == DEFAULT:
-            write_redirect(os.path.join(ROOT, LEGACY_PREFIX, old), f"../../{new}/")
+            p = sub(lang)
+            if lang == DEFAULT and legacy:
+                p = f"(?:{LEGACY_PREFIX}/)?"
+            lines.append(f'RedirectMatch 301 "^/{p}{rx(old)}(?:/.*)?$" "/{sub(lang)}{new}/"')
+            n += 1
+    lines += ["", "# Médias déplacés"]
+    for old, new in REDIRECTS["media"].items():
+        assert os.path.exists(os.path.join(ROOT, new.lstrip("/"))), f"redirects.json : fichier absent {new}"
+        lines.append(f'RedirectMatch 301 "^{rx(old)}$" "{new}"')
         n += 1
+    for old, slug in REDIRECTS["media_to_page"].items():
+        assert slug in SLUG_SET, f"redirects.json : page inconnue « {slug} »"
+        lines.append(f'RedirectMatch 301 "^{rx(old)}$" "/{sub(DEFAULT)}{slug}/"')
+        n += 1
+    if legacy:
+        lines += ["", f"# Anciennes adresses /{LEGACY_PREFIX}/… : le français est servi à la racine",
+                  f'RedirectMatch 301 "^/{LEGACY_PREFIX}(?:/(.*))?$" "/$1"']
+        n += 1
+    lines += ["", "</IfModule>", ""]
+    with open(os.path.join(ROOT, ".htaccess"), "w", encoding="utf-8", newline="\n") as f:
+        f.write("\n".join(lines))
     return n
 
 
@@ -936,9 +943,7 @@ def main():
         for slug in PAGES:
             build_page(slug, lang)
         print(f"  {lang} : 1 + {len(PAGES)} pages")
-    n = build_redirects()
-    if n:
-        print(f"  /{LEGACY_PREFIX}/ : {n} redirections vers la racine")
+    print(f"  .htaccess : {build_htaccess()} redirections 301")
 
     urls = []
     for lang in LANGS:

@@ -15,7 +15,7 @@ sys.path.insert(0, HERE)
 from faq_data import DATA, ENROLMENT, ADDRESSES
 
 SITE = os.path.abspath(os.path.join(HERE, "..", ".."))
-OUT = os.path.join(SITE, "docs")
+OUT = os.path.join(SITE, "media", "documents")
 
 
 NB = "\u00a0"
@@ -307,7 +307,8 @@ def render(lang, logo_b64):
     from playwright.sync_api import sync_playwright
     from pypdf import PdfWriter, PdfReader
     d = text(lang)
-    name = "FAQ-EFAN-2026-2027.pdf" if lang == "fr" else "FAQ-FASN-2026-2027-EN.pdf"
+    # Ces noms doivent rester ceux de la constante FAQ de build.py.
+    name = "faq-efan-2026-2027.pdf" if lang == "fr" else "faq-fasn-2026-2027-en.pdf"
     dest = os.path.join(OUT, name)
 
     tmp = Path(tempfile.mkdtemp(prefix="faq-"))
@@ -346,7 +347,7 @@ def render(lang, logo_b64):
 
 
 if __name__ == "__main__":
-    logo = b64(os.path.join(SITE, "assets", "img", "logo-efan.png"))
+    logo = b64(os.path.join(SITE, "media", "site", "logo-efan.png"))
     for lang in ("fr", "en"):
         p = render(lang, logo)
         print(f"{lang}: {p}  ({os.path.getsize(p)/1024:.0f} KB)")

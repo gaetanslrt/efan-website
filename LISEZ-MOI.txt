@@ -28,17 +28,25 @@ navigateur. Vous éditez un seul endroit ; le script produit 74 vraies pages.
 
 Mise en ligne
 -------------
-Déposer le contenu de ce dossier à la racine du site. Les adresses sont
-/history-ns/ pour le français et /en/history-ns/ pour l'anglais, etc.
+Déposer le contenu de ce dossier à la racine du site, sans oublier le fichier
+caché .htaccess (.cpanel.yml s'en charge). Les adresses sont /history/ pour le
+français et /en/history/ pour l'anglais, etc.
 
-Les anciennes adresses françaises (/fr/history-ns/…) restent valables : le
-dossier fr/ ne contient plus que des pages de redirection vers la racine. Les
-liens déjà envoyés aux familles et les résultats Google continuent donc de
-fonctionner ; ces pages sont marquées « noindex » et pointent vers la nouvelle
-adresse, si bien que Google remplacera progressivement les anciennes.
+Les anciennes adresses restent valables : /9-elementary-school-operating-mode-ns2/,
+/en/history-ns/, /fr/history-ns/, les anciens chemins d'images et de PDF
+(/media/2026/04/…, /docs/FAQ-…). Le fichier .htaccess, généré par build.py,
+les redirige (301) vers la nouvelle adresse. Les liens déjà envoyés aux
+familles et les résultats Google continuent donc de fonctionner, et Google
+remplacera progressivement les anciennes adresses.
 
-Attention : les anciennes adresses anglaises à la racine (/20-parcoursup/)
-affichent désormais la version française. La version anglaise est sous /en/.
+Si le serveur avait déjà un .htaccess avec ses propres réglages (PHP, HTTPS…),
+recopiez-les dans _source/htaccess-extra.txt : build.py les place en tête du
+.htaccess généré, qui sinon les écraserait au déploiement.
+
+Le déploiement copie les fichiers mais n'en supprime jamais : les anciens
+dossiers (/9-elementary-…/, /fr/, /media/2024/…) restent sur le serveur tant
+qu'on ne les efface pas dans public_html. Les redirections passent avant eux,
+mais un nettoyage dans le gestionnaire de fichiers cPanel reste conseillé.
 
 Langue par défaut : elle se règle par la constante DEFAULT en tête de build.py.
 
@@ -55,15 +63,34 @@ Modifier le site
     python3 build.py
 
 Il faut Python 3.8+ et BeautifulSoup (pip install beautifulsoup4 lxml).
-Le script réécrit les 74 pages en quelques secondes. Il ne touche ni assets/,
-ni media/, ni docs/.
+Le script réécrit les 74 pages, sitemap.xml et .htaccess en quelques secondes.
+Il ne touche ni assets/, ni media/.
+
+Organisation des fichiers :
+
+  assets/          le code du site : css/, js/, fonts/
+  media/           tous les fichiers affichés ou téléchargés :
+    site/            logo, favicons, photo d'accueil, logos des partenaires
+    documents/       PDF (FAQ, règlements, conditions générales)
+    team/            photos de l'équipe
+    logos/           logos cités dans les pages (MLF, NPS, VBCPS, écoles)
+    schedules/       emplois du temps
+    calendars/       calendriers scolaires de Norfolk et Virginia Beach
+    illustrations/   carte, tableaux des matières, sondage, photos isolées
+    school-life/     « La vie de l'école en images » (photo + vignette -t)
+    art-competition/ concours d'art
+    conferences-emc/ conférences EMC
+
+Version allégée d'une image : un fichier rangé à côté de l'original, suffixé de
+sa largeur (anne-hazet.jpg et anne-hazet-480.jpg). build.py l'utilise tout seul
+quand elle existe : 480 px pour les portraits et galeries, 1400 px ailleurs.
 
 Ce que vous éditez, selon le cas :
 
   _source/content/<page>.html   le texte d'une page, en anglais.
                                 HTML simple : <p>, <h2>, <ul>, <table>…
-                                Les liens internes s'écrivent /history-ns/ et
-                                les images /media/2025/10/photo.jpg ; le script
+                                Les liens internes s'écrivent /history/ et
+                                les images /media/team/photo.jpg ; le script
                                 les traduit en chemins relatifs par langue.
 
   _source/i18n/fr.json          la traduction, phrase par phrase.
@@ -81,14 +108,20 @@ Ce que vous éditez, selon le cas :
                                 deux langues, plus les effectifs du graphique.
                                 Après modification :
                                     python3 _source/faq/faq_pdf.py
-                                régénère les deux PDF dans docs/.
+                                régénère les deux PDF dans media/documents/.
                                 Nécessite playwright et pypdf.
 
   _source/structure.json        l'arborescence, les titres de pages et les
                                 descriptions <meta>, dans les deux langues.
 
-  build.py, constante REMOVED   les pages retirées du site et la page vers
-                                laquelle leur ancienne adresse redirige.
+  _source/redirects.json        les anciennes adresses et leur destination :
+                                pages renommées ou retirées ("pages"), médias
+                                déplacés ("media"), documents supprimés
+                                renvoyés vers une page ("media_to_page").
+                                Pour renommer une page : renommer son fichier
+                                dans _source/content/, son slug dans
+                                structure.json et les liens /ancien-slug/, puis
+                                ajouter "ancien-slug": "nouveau-slug" ici.
 
 Si vous ajoutez une phrase anglaise sans sa traduction, le script la signale en
 fin d'exécution et laisse l'anglais en place sur la page française : rien ne
@@ -121,8 +154,8 @@ EN et FR gardent toujours la même place : seule la mise en valeur se déplace.
 La langue affichée est en blanc, l'autre en gris et cliquable. Les deux libellés
 ne s'inversent plus quand on change de langue.
 
-Il relie chaque page à son équivalent : depuis /20-parcoursup/ il mène à
-/en/20-parcoursup/, et inversement — jamais à l'accueil. Les balises
+Il relie chaque page à son équivalent : depuis /parcoursup/ il mène à
+/en/parcoursup/, et inversement — jamais à l'accueil. Les balises
 hreflang font de même pour les moteurs de recherche, et chaque page déclare
 son attribut lang, ce dont les lecteurs d'écran ont besoin pour prononcer
 correctement.
