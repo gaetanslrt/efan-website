@@ -177,6 +177,10 @@ def translate(html, slug):
             tr = FR.get(norm(img["alt"]))
             if tr:
                 img["alt"] = BeautifulSoup(tr, "lxml").get_text(" ", strip=True)
+        # Image dont le texte est en anglais : fr.json peut lui associer sa
+        # version française ("/media/…/survey.png": "/media/…/sondage.png").
+        if img.get("src") in FR:
+            img["src"] = FR[img["src"]]
     return "".join(str(c) for c in body.contents)
 
 
